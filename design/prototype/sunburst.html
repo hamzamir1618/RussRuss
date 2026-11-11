@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RUSSRUSS · Sunburst Stand</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2730%27 fill=%27%23FF6A13%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2722%27 fill=%27%23FFC300%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Monoton&family=Righteous&family=Rubik:wght@300..900&display=swap">
+<link rel="stylesheet" href="common.css">
+<script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim'); setTimeout(function () { if (!window.gsap) document.documentElement.classList.remove('anim'); }, 4000);</script>
+<style>
+/* Layout: white stand-front; sunset sun behind the cup, ring text around it, 70s ephemera in layers; type does the heavy lifting. */
+@property --ph { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+:root {
+  --sun: #FFC300; --tang: #FF6A13; --pink: #FF2E7E; --lime: #7ED321; --cream: #FFF6E2; --cocoa: #3B1E08; --tint: #FFF1DC;
+  --bg: #FFFFFF; --fg: var(--cocoa); --accent: var(--pink); --on-accent: #FFFFFF;
+  --display: "Shrikhand", "Cooper Black", Georgia, serif;
+  --mono: "Monoton", "Shrikhand", serif;
+  --kick: "Righteous", "Rubik", sans-serif;
+  --body: "Rubik", system-ui, sans-serif;
+  --x: clamp(.55px, .085vw, 1.35px);
+  color-scheme: light;
+}
+/* ---- type treatments ---- */
+.stripe { color: var(--cream); -webkit-text-stroke: calc(var(--x) * 2.4) var(--cocoa);
+  text-shadow: calc(var(--x)*1) calc(var(--x)*1) 0 var(--pink), calc(var(--x)*2) calc(var(--x)*2) 0 var(--pink), calc(var(--x)*3) calc(var(--x)*3) 0 var(--pink), calc(var(--x)*4) calc(var(--x)*4) 0 var(--pink), calc(var(--x)*5) calc(var(--x)*5) 0 var(--tang), calc(var(--x)*6) calc(var(--x)*6) 0 var(--tang), calc(var(--x)*7) calc(var(--x)*7) 0 var(--tang), calc(var(--x)*8) calc(var(--x)*8) 0 var(--tang), calc(var(--x)*9) calc(var(--x)*9) 0 var(--sun), calc(var(--x)*10) calc(var(--x)*10) 0 var(--sun), calc(var(--x)*11) calc(var(--x)*11) 0 var(--sun), calc(var(--x)*12) calc(var(--x)*12) 0 var(--sun); }
+.pop { color: var(--tang); text-shadow: calc(var(--x)*3) calc(var(--x)*3) 0 var(--pink), calc(var(--x)*6) calc(var(--x)*6) 0 var(--sun); }
+.wavy { animation: ph 3.2s linear infinite; }
+.wavy .ch { position: relative; top: calc(sin(var(--i) * 34deg + var(--ph)) * .085em); }
+@keyframes ph { to { --ph: 360deg; } }
+.kick { font: 400 .86rem/1.2 var(--kick); letter-spacing: .16em; text-transform: uppercase; color: var(--cocoa); }
+.kick.pink { color: var(--pink); }
+.hero .w, .wipe-title .w { padding: .16em .22em .3em .08em; margin: -.16em -.22em -.3em -.08em; }
+
+/* ---- primitives ---- */
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; background: var(--tint); color: var(--cocoa); font: 700 .8rem/1 var(--body); white-space: nowrap; }
+.pill.hot { background: var(--pink); color: #FFFFFF; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 17px 26px; border-radius: 999px; border: 0; background: var(--pink); color: #FFFFFF; font: 400 1.05rem/1 var(--kick); letter-spacing: .06em; text-transform: uppercase; text-decoration: none; cursor: pointer; box-shadow: 0 10px 0 -2px var(--cocoa); transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s; }
+.btn:hover { transform: translateY(-3px) rotate(-1.5deg); box-shadow: 0 13px 0 -2px var(--cocoa); }
+.btn:active { transform: translateY(6px); box-shadow: 0 2px 0 -2px var(--cocoa); }
+.btn.sm { padding: 10px 16px; font-size: .82rem; box-shadow: 0 6px 0 -2px var(--cocoa); }
+.rays { border-radius: 50%; background: repeating-conic-gradient(from 0deg, var(--ray, rgba(255,160,0,.09)) 0deg 9deg, transparent 9deg 18deg); }
+.spin-slow { animation: spin 60s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.halftone { background-image: radial-gradient(currentColor 30%, transparent 32%); background-size: 14px 14px; -webkit-mask: radial-gradient(closest-side, #000 40%, transparent); mask: radial-gradient(closest-side, #000 40%, transparent); opacity: .35; }
+
+/* ---- decoration ---- */
+.deco { position: absolute; pointer-events: none; }
+.deco svg, .g .dsv { display: block; width: 100%; height: auto; overflow: visible; }
+.twinkle { animation: tw 2.6s ease-in-out infinite; transform-origin: center; }
+.twinkle.d1 { animation-delay: -.8s; } .twinkle.d2 { animation-delay: -1.6s; }
+@keyframes tw { 0%, 100% { transform: scale(.55) rotate(0deg); opacity: .55; } 50% { transform: scale(1) rotate(45deg); opacity: 1; } }
+.turn { animation: spin 24s linear infinite; transform-origin: center; }
+.bob { animation: bob 4.5s ease-in-out infinite alternate; }
+@keyframes bob { from { transform: translateY(-6px) rotate(-4deg); } to { transform: translateY(8px) rotate(5deg); } }
+
+/* ---- loader ---- */
+.loader { --loader-bg: #FFFFFF; overflow: hidden; }
+.loader .lrays { position: absolute; width: 160vmax; height: 160vmax; left: 50%; top: 50%; margin: -80vmax 0 0 -80vmax; }
+.loader svg, .loader-row { position: relative; }
+.loader-row { color: var(--cocoa); font-family: var(--kick); }
+.wm-text { font: 400 150px var(--display); }
+
+/* ---- hero ---- */
+.hero { background: #FFFFFF; }
+.hero-bg .rays { position: absolute; width: 170vmax; height: 170vmax; left: 50%; top: 58%; margin: -85vmax 0 0 -85vmax; }
+.hero-bg .sun { position: absolute; width: min(62vh, 66vw); aspect-ratio: 1; left: 50%; top: 56%; transform: translate(-50%, -50%); border-radius: 50%; background: url(assets/sunset.webp) 50% 78% / cover; box-shadow: 0 0 0 16px rgba(255,195,0,.25), 0 0 0 38px rgba(255,195,0,.12); }
+.sunring { position: absolute; width: calc(min(62vh, 66vw) * 1.24); aspect-ratio: 1; left: 50%; top: 56%; animation: spinc 50s linear infinite; }
+@keyframes spinc { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+.ringtxt { font: 400 10px var(--kick); letter-spacing: 2px; fill: var(--cocoa); }
+.hero-dot { position: absolute; width: 26vw; aspect-ratio: 1; left: 22%; top: 2%; color: var(--pink); }
+.nav { color: var(--cocoa); }
+.logo { font: 400 1.7rem/1 var(--display); color: var(--pink); text-decoration: none; text-shadow: 2px 2px 0 var(--tang), 4px 4px 0 var(--sun); }
+.nav ul { font: 400 .86rem/1 var(--kick); letter-spacing: .12em; text-transform: uppercase; }
+.hero > .kick { position: absolute; left: 4.6vw; top: 12.5%; z-index: 11; }
+.hl { font: 400 clamp(3rem, 10.4vw, 10.4rem)/.9 var(--display); }
+.hl-1 { top: 16%; left: 4vw; transform: rotate(-5deg); }
+.hl-2 { bottom: 23%; right: 4vw; transform: rotate(-4deg); font-size: clamp(2.6rem, 8.6vw, 8.6rem); }
+#cupIn { filter: drop-shadow(0 26px 30px rgba(59,30,8,.3)); }
+.g > img, .g > div > img { filter: drop-shadow(0 18px 18px rgba(59,30,8,.22)); }
+.waves { position: absolute; left: 0; bottom: 0; width: 100%; height: clamp(70px, 13vh, 130px); z-index: 8; }
+.hero-ui .meta { display: flex; flex-wrap: wrap; gap: 8px; max-width: 44%; }
+.cue { font: 400 .8rem/1 var(--kick); letter-spacing: .14em; text-transform: uppercase; color: var(--cocoa); display: flex; gap: 8px; align-items: center; }
+#wipe { background: #FFFFFF; display: grid; place-items: center; align-content: center; gap: 10px; overflow: hidden; }
+#wipe .rays { position: absolute; width: 170vmax; height: 170vmax; left: 50%; top: 55%; margin: -85vmax 0 0 -85vmax; }
+#wipe .kick, #wipe .wipe-title { position: relative; text-align: center; }
+.wipe-title { font: 400 clamp(3.4rem, 10vw, 10rem)/.9 var(--display); }
+@media (max-width: 700px) { .hl { font-size: clamp(2.8rem, 15vw, 5rem); } .hl-2 { bottom: 34%; font-size: clamp(2.4rem, 12vw, 4.4rem); } .hero .kick { top: 11%; font-size: .7rem; } .hero-ui .meta { max-width: none; } .hero-dot { display: none; } }
+
+/* ---- reel ---- */
+.reel { background: #FFFFFF; color: var(--cocoa); }
+.reel-word { font: 400 clamp(7rem, 26vw, 28rem)/1 var(--mono); color: var(--tint, var(--sun)); opacity: .55; letter-spacing: -.02em; }
+.reel-word span { color: var(--tint); }
+.reel-head { max-width: min(48vw, 640px); gap: 4px; }
+.reel-head svg { width: min(46vw, 620px); height: auto; overflow: visible; }
+.arch { font: 400 132px var(--display); }
+.reel-decor, .mani-decor { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.card { background: #FFF8EC; border-radius: 34px; box-shadow: 0 30px 40px -22px rgba(59,30,8,.35); }
+.stage { margin: 12px 12px 0; border-radius: 24px; background: var(--fc); }
+.stage .rays { --ray: rgba(255,246,226,.42); position: absolute; width: 520px; height: 520px; left: 50%; top: 100%; margin: -260px 0 0 -260px; }
+.stage .disc { position: absolute; width: 220px; height: 220px; left: 50%; bottom: -96px; margin-left: -110px; border-radius: 50%; background: rgba(255,246,226,.55); }
+.stage .stk { position: absolute; left: 12px; top: 12px; width: 26px; z-index: 5; color: #FFFFFF; }
+.prod { filter: drop-shadow(0 16px 16px rgba(59,30,8,.3)); }
+.garn { filter: drop-shadow(0 8px 8px rgba(59,30,8,.25)); }
+.card-body { padding: 16px 20px 0; display: grid; gap: 8px; }
+.card h3 { font: 400 1.85rem/1 var(--display); }
+.card p { font-size: .92rem; color: #6B4A2F; }
+.stats { display: flex; flex-wrap: wrap; gap: 6px; }
+.stats span { font: 700 .72rem/1 var(--body); padding: 6px 10px; border-radius: 999px; background: #FFE7A8; }
+.card-foot { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px 20px; }
+.price { font: 400 1.5rem/1 var(--display); color: var(--pink); }
+.progress { background: #FFEFD2; }
+.progress span { background: var(--tint, var(--cocoa)); }
+
+/* ---- how it's made ---- */
+.mani, .mani-left { background: #FFFFFF; }
+.figs { width: min(56vh, 38vw); }
+.disc-wrap { position: relative; width: 100%; height: 100%; }
+.disc-clip { position: absolute; inset: 10.5%; border-radius: 50%; overflow: hidden; background: radial-gradient(circle at 42% 36%, #FFE89A, var(--sun) 58%, var(--tang)); box-shadow: inset 0 -14px 0 rgba(59,30,8,.08); }
+.disc-clip .rays { --ray: rgba(255,246,226,.5); position: absolute; inset: -40%; }
+.disc-clip > img { position: absolute; }
+.disc-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 40s linear infinite; overflow: visible; }
+.fig > .disc-wrap { overflow: visible; }
+.fig-1 .disc-clip > img { width: 84%; left: 8%; top: 8%; animation: spin 26s linear infinite; }
+.fig-2 .disc-clip > img { width: 128%; height: 128%; left: -10%; top: -4%; object-fit: cover; object-position: 60% 40%; }
+.fig-3 .disc-clip > img { height: 94%; left: 50%; top: 4%; transform: translateX(-50%); }
+.trio img { position: absolute; filter: drop-shadow(0 12px 12px rgba(59,30,8,.3)); }
+#figCap { position: relative; font: 400 .82rem/1.3 var(--kick); letter-spacing: .12em; text-transform: uppercase; color: var(--cocoa); text-align: center; background: var(--tint); padding: 8px 14px; border-radius: 999px; }
+.mani-right { gap: 0; }
+.mani-top { position: absolute; top: clamp(20px, 5vh, 48px); left: clamp(16px, 4vw, 56px); }
+.steps li { font: 400 .8rem/1 var(--kick); padding: 8px 12px; border-radius: 999px; background: var(--tint); transition: background-color .3s, color .3s; }
+.steps li.on { background: var(--pink); color: #FFFFFF; }
+.mc { gap: 12px; }
+.mc-num { gap: 16px; }
+.n { font: 400 clamp(4rem, 10vw, 10rem)/.9 var(--mono); --fill-c: var(--pink); --empty-c: #FFDDB0; padding-right: .06em; }
+.unit { font: 400 1rem/1.25 var(--kick); letter-spacing: .08em; text-transform: uppercase; max-width: 16ch; }
+.mc-text { font: 400 clamp(1.8rem, 3.6vw, 3.4rem)/1.02 var(--body); letter-spacing: -.02em; }
+.mc-body { font: 500 1.05rem/1.55 var(--body); color: #6B4A2F; max-width: 42ch; }
+@media (max-width: 760px) { .figs { width: min(28vh, 62vw); } .mani-top { display: none; } }
+
+/* ---- outro ---- */
+.outro { background: #FFFFFF; color: var(--cocoa); }
+.outro-row p { font: 400 clamp(1.9rem, 4.2vw, 3.8rem)/1.02 var(--display); color: var(--cocoa); max-width: 18ch; }
+.outro .float { position: absolute; z-index: 1; filter: drop-shadow(0 16px 18px rgba(59,30,8,.25)); }
+.outro .note { font: 400 .82rem/1.3 var(--kick); letter-spacing: .1em; text-transform: uppercase; }
+.postcard { position: relative; z-index: 2; margin: 44px auto 0; max-width: 980px; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 50px -26px rgba(59,30,8,.5); }
+.postcard img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; }
+.postcard figcaption { position: absolute; left: 18px; bottom: 18px; }
+
+/* ---- finale ---- */
+.finale { position: relative; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; background: #FFF6E2; }
+.stand-stage { position: absolute; left: 50%; top: 50%; width: max(100vw, 179.1vh); height: max(100vh, 55.84vw); margin-left: calc(max(100vw, 179.1vh) / -2); margin-top: calc(max(100vh, 55.84vw) / -2); }
+.stand-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sweep { position: absolute; inset: 0; background: linear-gradient(105deg, transparent 32%, rgba(255,236,190,.65) 50%, transparent 68%); mix-blend-mode: soft-light; pointer-events: none; }
+.sign { position: absolute; left: 31%; top: 25%; width: 37%; transform-origin: 50% -30%; z-index: 3; }
+.sign::before, .sign::after { content: ""; position: absolute; top: -26%; width: .35%; min-width: 2px; height: 28%; background: #3B1E08; }
+.sign::before { left: 16%; } .sign::after { right: 16%; }
+.board { background: #FFF6E2; border: clamp(3px, .4vw, 7px) solid #FF2E7E; border-radius: 22px; padding: 4% 6% 3%; box-shadow: 0 0 0 clamp(2px, .2vw, 4px) #FFF6E2, 0 0 0 clamp(4px, .4vw, 7px) #3B1E08, 0 22px 30px -14px rgba(59,30,8,.5); text-align: center; }
+.board .kick { font-size: clamp(.55rem, .9vw, .9rem); margin-bottom: 2%; }
+.sign-wm { width: 100%; height: auto; overflow: visible; display: block; }
+.srv { position: absolute; bottom: 30.5%; height: 31%; width: auto; z-index: 4; filter: drop-shadow(0 20px 14px rgba(59,30,8,.35)); }
+.curtain { position: absolute; inset: 0; z-index: 30; display: none; place-items: center; }
+.anim .curtain { display: grid; }
+.awn { position: absolute; left: 0; right: 0; top: -30%; height: calc(130% + 30px); background: repeating-linear-gradient(90deg, #FF2E7E 0 6%, #FFF6E2 6% 12%); -webkit-mask: radial-gradient(circle at 50% 100%, transparent 22px, #000 23px) 0 100% / 64px 100% repeat-x, linear-gradient(#000, #000) 0 0 / 100% calc(100% - 22px) no-repeat; mask: radial-gradient(circle at 50% 100%, transparent 22px, #000 23px) 0 100% / 64px 100% repeat-x, linear-gradient(#000, #000) 0 0 / 100% calc(100% - 22px) no-repeat; box-shadow: 0 20px 40px rgba(59,30,8,.3); }
+.curtain-copy { position: relative; text-align: center; background: #FFF6E2; padding: clamp(18px, 3vw, 36px) clamp(24px, 5vw, 64px); border-radius: 999px; box-shadow: 0 0 0 6px #3B1E08; }
+.curtain-title { font: 400 clamp(2.6rem, 7.4vw, 7.4rem)/.95 var(--display); }
+.fin-ui { position: absolute; left: 0; right: 0; bottom: clamp(70px, 13vh, 120px); z-index: 20; display: flex; justify-content: center; align-items: flex-end; gap: 20px; pointer-events: none; }
+.fin-ui > * { pointer-events: auto; }
+.fin-cta { display: grid; justify-items: center; gap: 12px; }
+.btn.big { padding: 22px 34px; font-size: 1.2rem; box-shadow: 0 12px 0 -2px var(--cocoa); }
+.fin-badge-wrap { position: absolute; right: clamp(12px, 6vw, 90px); bottom: clamp(60px, 20vh, 220px); width: clamp(100px, 11vw, 170px); }
+.fin-badge { width: 100%; height: auto; transform-origin: 50% -10%; animation: swing 2.8s ease-in-out infinite alternate; }
+@keyframes swing { from { transform: rotate(-9deg); } to { transform: rotate(9deg); } }
+.fin-waves { position: absolute; left: 0; bottom: 0; width: 100%; height: clamp(60px, 11vh, 110px); z-index: 18; }
+.fin-foot { position: absolute; left: clamp(16px, 3vw, 36px); bottom: 14px; z-index: 19; font: 400 .72rem/1.3 var(--kick); letter-spacing: .14em; text-transform: uppercase; color: var(--cocoa); }
+@media (max-width: 700px) {
+  .srv { height: 21%; }
+  .srv:nth-of-type(2) { left: 37.6% !important; } .srv:nth-of-type(3) { left: 43.4% !important; } .srv:nth-of-type(4) { left: 49.2% !important; } .srv:nth-of-type(5) { left: 55% !important; }
+  .sign { left: 37%; width: 26%; }
+  .fin-badge-wrap { bottom: 40%; right: 10px; width: 92px; }
+  .fin-foot { display: none; }
+}
+
+/* ---- orange spin-through (products → steps) ---- */
+.mani-orange { display: none; }
+.anim .mani-orange { display: block; position: absolute; left: 28%; top: 50%; width: 30vmin; height: auto; margin: -15vmin 0 0 -15vmin; z-index: 0; pointer-events: none; }
+.mani-wrap .mani { z-index: 1; }
+@media (max-width: 760px) { .anim .mani-orange { left: 50%; top: 20%; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="ringP" d="M100,100 m-89,0 a89,89 0 1,1 178,0 a89,89 0 1,1 -178,0" />
+    <path id="ringS" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0" />
+    <path id="archP" d="M60,330 Q500,10 940,330" />
+    <path id="dropP" d="M0 -9 C3 -4 6 -1 6 3 A6 6 0 0 1 -6 3 C-6 -1 -3 -4 0 -9 Z" />
+  </defs>
+  <symbol id="sparkle" viewBox="-50 -50 100 100"><path d="M0 -50 C5 -12 12 -5 50 0 C12 5 5 12 0 50 C-5 12 -12 5 -50 0 C-12 -5 -5 -12 0 -50 Z" fill="currentColor" /></symbol>
+  <symbol id="daisy" viewBox="-50 -50 100 100"><g fill="currentColor"><ellipse cx="0" cy="-27" rx="12" ry="22" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(45)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(90)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(135)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(180)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(225)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(270)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(315)" /></g><circle r="14" fill="#FFC300" /><circle r="14" fill="none" stroke="#3B1E08" stroke-width="2" stroke-dasharray="1 4" /></symbol>
+  <symbol id="rainbow" viewBox="-52 -52 104 54"><path d="M-50 0 A50 50 0 0 1 50 0 L40 0 A40 40 0 0 0 -40 0 Z" fill="#FF2E7E" /><path d="M-40 0 A40 40 0 0 1 40 0 L30 0 A30 30 0 0 0 -30 0 Z" fill="#FF6A13" /><path d="M-30 0 A30 30 0 0 1 30 0 L20 0 A20 20 0 0 0 -20 0 Z" fill="#FFC300" /></symbol>
+  <symbol id="squiggle" viewBox="0 0 100 20"><path d="M3 10 Q11.5 1 20 10 T37 10 T54 10 T71 10 T88 10 T97 10" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" /></symbol>
+  <symbol id="sunicon" viewBox="-50 -50 100 100"><circle r="18" fill="currentColor" /><g stroke="currentColor" stroke-width="6" stroke-linecap="round"><path d="M0 -28 V-44 M0 28 V44 M-28 0 H-44 M28 0 H44 M-20 -20 L-31 -31 M20 20 L31 31 M-20 20 L-31 31 M20 -20 L31 -31" /></g></symbol>
+  <symbol id="badge6" viewBox="0 0 200 200"><polygon data-star="18,98,84" transform="translate(100 100)" fill="#FF2E7E" /><circle cx="100" cy="100" r="70" fill="#FFF6E2" /><text class="ringtxt" style="font-size:12px; letter-spacing:2.6px"><textPath href="#ringS" textLength="370">PRESSED DAILY • 350 ML • NEVER HEATED •</textPath></text><text x="100" y="114" text-anchor="middle" style="font:400 40px Shrikhand, serif" fill="#FF6A13">6am</text></symbol>
+  <symbol id="badge7" viewBox="0 0 200 200"><polygon data-star="18,98,84" transform="translate(100 100)" fill="#FFC300" /><circle cx="100" cy="100" r="70" fill="#FFF6E2" /><text class="ringtxt" style="font-size:12px; letter-spacing:2.6px"><textPath href="#ringS" textLength="370">OPEN 7 TO 7 • RUSSRUSS • JUICE STAND •</textPath></text><text x="100" y="98" text-anchor="middle" style="font:400 22px Righteous, sans-serif; letter-spacing:2px" fill="#3B1E08">SEE YOU</text><text x="100" y="128" text-anchor="middle" style="font:400 34px Shrikhand, serif" fill="#FF2E7E">at 7</text></symbol>
+  <symbol id="leaf" viewBox="-30 -50 60 100"><path d="M0 46 C-32 16 -26 -26 0 -46 C26 -26 32 16 0 46 Z" fill="#7ED321" /><path d="M0 42 V-38" stroke="#FFF6E2" stroke-width="3" stroke-linecap="round" opacity=".7" /></symbol>
+  <symbol id="drop" viewBox="-8 -11 16 19"><use href="#dropP" fill="#FFF6E2" stroke="#FF6A13" stroke-width="1" /></symbol>
+</svg>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="lrays rays" id="loaderSpin"></div>
+  <svg viewBox="0 0 1000 240">
+    <defs><clipPath id="lclip"><text x="500" y="180" text-anchor="middle" class="wm-text">RussRuss</text></clipPath></defs>
+    <text x="500" y="180" text-anchor="middle" class="wm-text" fill="#FFE6BF">RussRuss</text>
+    <g clip-path="url(#lclip)"><g id="loaderFill" transform="translate(0 250)"><g data-loop-x><path data-wave="2600,560,14,14,250" fill="#FF2E7E" /></g></g></g>
+  </svg>
+  <div class="loader-row"><span>Pressing <span id="loaderCount">000</span>%</span><span>Open 7 to 7</span></div>
+</div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+<nav class="switch" aria-label="Prototype controls"><span style="padding:9px 12px">Sunburst Stand</span><button type="button" id="replayBtn">Replay intro</button></nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero" aria-label="Hero">
+  <div class="hero-bg">
+    <div class="rays spin-slow"></div>
+    <div class="hero-dot halftone"></div>
+    <div class="sun"></div>
+    <svg class="sunring" viewBox="0 0 200 200" aria-hidden="true"><text class="ringtxt"><textPath href="#ringP" textLength="556">FRESH-SQUEEZED EVERY MORNING • RUSSRUSS JUICE STAND • OPEN 7 TO 7 •</textPath></text></svg>
+  </div>
+  <nav class="nav"><a class="logo" href="#hero">RussRuss</a><ul><li>Menu</li><li>How it's made</li><li>Find the stand</li></ul><span class="pill">Bag · 0</span></nav>
+
+  <div class="g g-back" data-depth=".2" style="bottom:21%; left:3%; width:clamp(110px, 14vw, 230px)"><div><svg class="dsv" viewBox="-52 -52 104 54"><use href="#rainbow" /></svg></div></div>
+  <div class="g g-back" data-depth=".3" style="top:28%; left:11%; width:clamp(80px, 10vw, 170px)"><img src="assets/melon.webp" alt="" style="transform:rotate(-18deg)"></div>
+  <div class="g g-back" data-depth=".25" style="top:30%; right:15%; width:clamp(46px, 5.5vw, 92px)"><img src="assets/pineapple.webp" alt="" style="transform:rotate(14deg)"></div>
+  <div class="g g-back" data-depth=".35" style="top:11%; left:40%; width:clamp(30px, 3.4vw, 54px); color:#FF2E7E"><div><svg class="dsv turn" viewBox="-50 -50 100 100"><use href="#daisy" /></svg></div></div>
+  <div class="g g-back" data-depth=".4" style="top:27%; left:20%; width:clamp(60px, 7vw, 110px); color:#FF2E7E"><div><svg class="dsv" viewBox="0 0 100 20" style="transform:rotate(-24deg)"><use href="#squiggle" /></svg></div></div>
+
+  <div class="splash-pos"><img id="splash" src="assets/splash.webp" alt=""></div>
+  <div class="cup-pos"><div id="cup"><div id="cupIn"><img src="assets/cup-orange.webp" alt="A cup of fresh orange juice with a striped straw"></div></div></div>
+
+  <p class="kick">Cold-pressed juice · Open 7 to 7</p>
+  <h1 class="hl-wrap"><span class="hl hl-1 stripe" data-split>Squeezed</span><span class="hl hl-2 pop wavy" data-split>this morning.</span></h1>
+
+  <div class="g g-front" data-depth="1.2" style="top:12%; right:6%; width:clamp(90px, 12vw, 200px)"><img src="assets/orange-half.webp" alt="" style="transform:rotate(16deg)"></div>
+  <div class="g g-front" data-depth="1.5" style="top:46%; left:21%; width:clamp(44px, 5vw, 84px)"><img src="assets/strawberry.webp" alt="" style="transform:rotate(-20deg)"></div>
+  <div class="g g-front" data-depth="1.3" style="bottom:22%; left:5%; width:clamp(90px, 10vw, 150px)"><div><svg class="dsv bob" viewBox="0 0 200 200"><use href="#badge6" /></svg></div></div>
+  <div class="g g-front" data-depth="1.8" style="top:60%; right:31%; width:clamp(30px, 3.6vw, 60px)"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-30 -50 60 100'%3E%3Cpath d='M0 46 C-32 16 -26 -26 0 -46 C26 -26 32 16 0 46 Z' fill='%237ED321'/%3E%3Cpath d='M0 42 V-38' stroke='%23FFF6E2' stroke-width='3' stroke-linecap='round' opacity='.7'/%3E%3C/svg%3E" alt="" style="transform:rotate(40deg)"></div>
+  <div class="g g-front" data-depth="2.1" style="top:24%; left:57%; width:clamp(18px, 2vw, 32px); color:#FFC300"><div><svg class="dsv twinkle" viewBox="-50 -50 100 100"><use href="#sparkle" /></svg></div></div>
+  <div class="g g-front" data-depth="2.3" style="top:40%; left:33%; width:clamp(14px, 1.5vw, 24px); color:#FF2E7E"><div><svg class="dsv twinkle d1" viewBox="-50 -50 100 100"><use href="#sparkle" /></svg></div></div>
+  <div class="g g-front" data-depth="1.9" style="top:20%; right:24%; width:clamp(16px, 1.8vw, 28px); color:#FF6A13"><div><svg class="dsv twinkle d2" viewBox="-50 -50 100 100"><use href="#sparkle" /></svg></div></div>
+  <div class="g g-front" data-depth="1.6" style="bottom:34%; right:5%; width:clamp(40px, 4.4vw, 70px); color:#FF6A13"><div><svg class="dsv turn" viewBox="-50 -50 100 100"><use href="#daisy" /></svg></div></div>
+  <div class="g g-front" data-depth="1.4" style="bottom:30%; right:13%; width:clamp(50px, 6vw, 96px); color:#7ED321"><div><svg class="dsv" viewBox="0 0 100 20" style="transform:rotate(12deg)"><use href="#squiggle" /></svg></div></div>
+
+  <svg class="waves" viewBox="0 0 2000 220" preserveAspectRatio="none" aria-hidden="true">
+    <g data-loop-x><path data-wave="2600,220,50,14,250" fill="#FF2E7E" /></g>
+    <g data-loop-x><path data-wave="2600,220,110,14,250" fill="#FF6A13" /></g>
+    <g data-loop-x><path data-wave="2600,220,170,14,250" fill="#FFC300" /></g>
+  </svg>
+
+  <div class="hero-ui">
+    <div class="meta"><span class="pill">Pressed at 6 am</span><span class="pill">350 ml cups</span><span class="pill hot">Never heated</span></div>
+    <span class="cue hide-sm">Scroll down ↓</span>
+    <span class="magnet" data-magnet><a class="btn" href="#reel" data-cursor="Order">Order for pickup</a></span>
+  </div>
+
+  <div id="wipe" class="iris" aria-hidden="true">
+    <div class="rays" id="wipeSpin"></div>
+    <p class="kick pink">What we're pouring today</p>
+    <p class="wipe-title stripe">Today's press</p>
+  </div>
+</section>
+
+<!-- ============ PRODUCTS ============ -->
+<section class="reel" id="reel" aria-label="Today's juices">
+  <div class="reel-word" aria-hidden="true"><span id="reelWord">SUN UP</span></div>
+  <div class="reel-decor" aria-hidden="true">
+    <div class="deco" style="top:6%; right:4%; width:clamp(120px, 16vw, 240px)"><svg viewBox="-52 -52 104 54"><use href="#rainbow" /></svg></div>
+    <div class="deco" style="top:30%; right:22%; width:26px; color:#FFC300"><svg class="twinkle" viewBox="-50 -50 100 100"><use href="#sparkle" /></svg></div>
+    <div class="deco" style="top:14%; left:46%; width:40px; color:#FF2E7E"><svg class="turn" viewBox="-50 -50 100 100"><use href="#daisy" /></svg></div>
+    <div class="deco halftone" style="left:-4%; bottom:-6%; width:30vw; aspect-ratio:1; color:#FF6A13"></div>
+    <div class="deco" style="bottom:14%; left:38%; width:90px; color:#7ED321"><svg viewBox="0 0 100 20"><use href="#squiggle" /></svg></div>
+  </div>
+  <div class="reel-head">
+    <h2 aria-label="Today's press">
+      <svg viewBox="0 0 1000 360" aria-hidden="true">
+        <text class="arch" fill="#FFC300" transform="translate(12 12)"><textPath href="#archP" startOffset="50%" text-anchor="middle">Today's press</textPath></text>
+        <text class="arch" fill="#FF6A13" transform="translate(8 8)"><textPath href="#archP" startOffset="50%" text-anchor="middle">Today's press</textPath></text>
+        <text class="arch" fill="#FF2E7E" transform="translate(4 4)"><textPath href="#archP" startOffset="50%" text-anchor="middle">Today's press</textPath></text>
+        <text class="arch" fill="#FFF6E2" stroke="#3B1E08" stroke-width="5" paint-order="stroke"><textPath href="#archP" startOffset="50%" text-anchor="middle">Today's press</textPath></text>
+      </svg>
+    </h2>
+    <span class="pill" style="justify-self:center">Four juices, pressed this morning</span>
+  </div>
+  <span class="pill reel-count" id="reelCount">01 / 04</span>
+  <div id="track" data-cursor="Drag">
+    <div class="slot"><article class="card" style="--fc:#FFC300">
+      <div class="stage"><div class="rays spin-slow"></div><div class="disc"></div><svg class="stk twinkle" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#sparkle" /></svg><div class="prod-pos"><img class="prod" src="assets/cup-orange.webp" alt="Sun Up"></div><img class="garn" src="assets/orange-half.webp" alt="" style="top:14px; right:16px; width:64px"></div>
+      <div class="card-body"><h3>Sun Up</h3><p>Orange, carrot and a thumb of ginger. The first thing we press every morning.</p><div class="stats"><span>140 cal</span><span>3.2 lb fruit</span></div></div>
+      <div class="card-foot"><span class="price">$9.50</span><button class="btn sm" type="button" data-add="0" data-cursor="Add">Add</button></div>
+    </article></div>
+    <div class="slot"><article class="card" style="--fc:#7ED321">
+      <div class="stage"><div class="rays spin-slow"></div><div class="disc"></div><svg class="stk twinkle d1" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#sparkle" /></svg><div class="prod-pos"><img class="prod" src="assets/cup-green.webp" alt="Garden Party"></div><svg class="garn" style="top:14px; right:18px; width:40px" viewBox="-30 -50 60 100" aria-hidden="true"><use href="#leaf" /></svg></div>
+      <div class="card-body"><h3>Garden Party</h3><p>Green apple, celery, cucumber and mint. Sharp and cold, not sweet.</p><div class="stats"><span>90 cal</span><span>3.5 lb produce</span></div></div>
+      <div class="card-foot"><span class="price">$10.00</span><button class="btn sm" type="button" data-add="1" data-cursor="Add">Add</button></div>
+    </article></div>
+    <div class="slot"><article class="card" style="--fc:#FF2E7E">
+      <div class="stage"><div class="rays spin-slow"></div><div class="disc"></div><svg class="stk twinkle d2" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#sparkle" /></svg><div class="prod-pos"><img class="prod" src="assets/cup-pink.webp" alt="Berry Beet"></div><img class="garn" src="assets/strawberry.webp" alt="" style="top:14px; right:16px; width:50px"></div>
+      <div class="card-body"><h3>Berry Beet</h3><p>Watermelon, strawberry and beet. Sweet up front, earthy after.</p><div class="stats"><span>150 cal</span><span>3.1 lb produce</span></div></div>
+      <div class="card-foot"><span class="price">$9.50</span><button class="btn sm" type="button" data-add="2" data-cursor="Add">Add</button></div>
+    </article></div>
+    <div class="slot"><article class="card" style="--fc:#FF6A13">
+      <div class="stage"><div class="rays spin-slow"></div><div class="disc"></div><svg class="stk twinkle" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#sparkle" /></svg><div class="prod-pos"><img class="prod" src="assets/cup-mango.webp" alt="Gold Rush"></div><img class="garn" src="assets/pineapple.webp" alt="" style="top:16px; right:16px; width:46px"></div>
+      <div class="card-body"><h3>Gold Rush</h3><p>Pineapple, mango and ginger. The ginger shows up a second later.</p><div class="stats"><span>130 cal</span><span>2.8 lb fruit</span></div></div>
+      <div class="card-foot"><span class="price">$9.00</span><button class="btn sm" type="button" data-add="3" data-cursor="Add">Add</button></div>
+    </article></div>
+  </div>
+  <div class="progress" aria-hidden="true"><span id="reelBar"></span></div>
+</section>
+
+<!-- ============ HOW IT'S MADE ============ -->
+<section class="mani-wrap" aria-label="How a cup gets made">
+  <img class="mani-orange" id="maniOrange" src="assets/orange-half.webp" alt="" aria-hidden="true">
+  <div class="mani">
+    <div class="mani-left">
+      <div class="mani-decor" aria-hidden="true">
+        <div class="deco" style="left:6%; bottom:6%; width:44%"><svg viewBox="-52 -52 104 54"><use href="#rainbow" /></svg></div>
+        <div class="deco halftone" style="right:-10%; top:-8%; width:50%; aspect-ratio:1; color:#FF2E7E"></div>
+        <div class="deco" style="left:8%; top:10%; width:44px; color:#FF6A13"><svg class="turn" viewBox="-50 -50 100 100"><use href="#daisy" /></svg></div>
+        <div class="deco" style="right:10%; bottom:16%; width:52px; color:#FF2E7E"><svg class="turn" viewBox="-50 -50 100 100"><use href="#daisy" /></svg></div>
+        <div class="deco" style="left:16%; top:30%; width:22px; color:#FFC300"><svg class="twinkle" viewBox="-50 -50 100 100"><use href="#sparkle" /></svg></div>
+        <div class="deco" style="right:16%; top:22%; width:30px; color:#FF2E7E"><svg class="twinkle d1" viewBox="-50 -50 100 100"><use href="#sparkle" /></svg></div>
+        <div class="deco" style="right:6%; top:50%; width:18px; color:#FF6A13"><svg class="twinkle d2" viewBox="-50 -50 100 100"><use href="#sparkle" /></svg></div>
+        <div class="deco" style="left:4%; top:56%; width:80px; color:#7ED321"><svg viewBox="0 0 100 20" style="transform:rotate(-70deg)"><use href="#squiggle" /></svg></div>
+        <div class="deco" style="right:22%; top:6%; width:48px; color:#FFC300"><svg class="turn" viewBox="-50 -50 100 100"><use href="#sunicon" /></svg></div>
+      </div>
+      <div class="figs">
+        <div class="fig fig-0" data-cap="Step 1 · The morning delivery"><div class="disc-wrap">
+          <div class="disc-clip"><div class="rays spin-slow"></div><div class="trio"><img src="assets/melon.webp" alt="" style="left:6%; top:14%; width:44%; transform:rotate(-14deg)"><img src="assets/pineapple.webp" alt="" style="right:12%; top:10%; width:26%; transform:rotate(18deg)"><img src="assets/orange-half.webp" alt="" style="left:28%; top:40%; width:40%"><img src="assets/strawberry.webp" alt="" style="right:10%; bottom:12%; width:28%; transform:rotate(-12deg)"></div></div>
+          <svg class="disc-ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="79.5" fill="none" stroke="#FF2E7E" stroke-width="5" /><circle cx="100" cy="100" r="97" fill="none" stroke="#3B1E08" stroke-width="1.2" stroke-dasharray="1.5 5" stroke-linecap="round" /><text class="ringtxt"><textPath href="#ringP" textLength="556">STEP 01 • PICK • STEP 01 • PICK • STEP 01 • PICK •</textPath></text></svg>
+        </div></div>
+        <div class="fig fig-1" data-cap="Step 2 · A Valencia orange, halved"><div class="disc-wrap">
+          <div class="disc-clip"><div class="rays spin-slow"></div><img src="assets/orange-half.webp" alt="A halved orange"></div>
+          <svg class="disc-ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="79.5" fill="none" stroke="#FF6A13" stroke-width="5" /><circle cx="100" cy="100" r="97" fill="none" stroke="#3B1E08" stroke-width="1.2" stroke-dasharray="1.5 5" stroke-linecap="round" /><text class="ringtxt"><textPath href="#ringP" textLength="556">STEP 02 • CUT • STEP 02 • CUT • STEP 02 • CUT •</textPath></text></svg>
+        </div></div>
+        <div class="fig fig-2" data-cap="Step 3 · The press"><div class="disc-wrap">
+          <div class="disc-clip"><img src="assets/press.webp" alt="A hydraulic juice press pouring orange juice"></div>
+          <svg class="disc-ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="79.5" fill="none" stroke="#FF2E7E" stroke-width="5" /><circle cx="100" cy="100" r="97" fill="none" stroke="#3B1E08" stroke-width="1.2" stroke-dasharray="1.5 5" stroke-linecap="round" /><text class="ringtxt"><textPath href="#ringP" textLength="556">STEP 03 • PRESS • STEP 03 • PRESS • STEP 03 • PRESS •</textPath></text></svg>
+        </div></div>
+        <div class="fig fig-3" data-cap="Step 4 · Sun Up, 350 ml"><div class="disc-wrap">
+          <div class="disc-clip"><div class="rays spin-slow"></div><img src="assets/cup-orange.webp" alt="A cup of Sun Up"></div>
+          <svg class="disc-ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="79.5" fill="none" stroke="#FF6A13" stroke-width="5" /><circle cx="100" cy="100" r="97" fill="none" stroke="#3B1E08" stroke-width="1.2" stroke-dasharray="1.5 5" stroke-linecap="round" /><text class="ringtxt"><textPath href="#ringP" textLength="556">STEP 04 • POUR • STEP 04 • POUR • STEP 04 • POUR •</textPath></text></svg>
+        </div></div>
+      </div>
+      <p id="figCap">Step 1 · The morning delivery</p>
+    </div>
+    <div class="mani-right">
+      <p class="kick pink mani-top">How a cup gets made</p>
+      <ol class="steps" aria-hidden="true"><li class="on">Pick</li><li>Cut</li><li>Press</li><li>Pour</li></ol>
+      <div class="mc-stack">
+        <div class="mc"><p class="kick">Step 01 · Pick</p><div class="mc-num"><span class="n" data-to="5" data-dec="0" data-suf=":00">5:00</span><span class="unit">a.m., when the fruit shows up</span></div><p class="mc-text">We buy what's ripe that morning.</p><p class="mc-body">So the menu moves with the seasons. In winter, that means a lot of citrus.</p></div>
+        <div class="mc"><p class="kick">Step 02 · Cut</p><div class="mc-num"><span class="n" data-to="3.2" data-dec="1">3.2</span><span class="unit">pounds of fruit in every cup</span></div><p class="mc-text">Everything is washed and cut by hand.</p><p class="mc-body">Peels off, seeds out. Nothing goes in to bulk it up.</p></div>
+        <div class="mc"><p class="kick">Step 03 · Press</p><div class="mc-num"><span class="n" data-to="4" data-dec="0">4</span><span class="unit">tons of slow pressure</span></div><p class="mc-text">Squeezed, not spun.</p><p class="mc-body">A hydraulic press pushes the juice out of the pulp, so nothing heats up on the way.</p></div>
+        <div class="mc"><p class="kick">Step 04 · Pour</p><div class="mc-num"><span class="n" data-to="72" data-dec="0">72</span><span class="unit">hours before it fades</span></div><p class="mc-text">Into cups within the hour.</p><p class="mc-body">We don't pasteurize, so it doesn't keep forever. Drink it within three days.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINALE ============ -->
+<section class="finale" id="finale" aria-label="Visit the stand">
+  <div class="stand-stage" id="standStage">
+    <img class="stand-photo" src="assets/stand.webp" alt="The RussRuss stand: a striped awning, crates of oranges and watermelons, and an empty counter">
+    <div class="sweep" aria-hidden="true"></div>
+    <div class="deco" style="left:24%; top:40%; width:1.6%; color:#FFF6E2"><svg class="twinkle" viewBox="-50 -50 100 100"><use href="#sparkle" /></svg></div>
+    <div class="deco" style="left:74%; top:34%; width:2.2%; color:#FFC300"><svg class="twinkle d1" viewBox="-50 -50 100 100"><use href="#sparkle" /></svg></div>
+    <div class="deco" style="left:8%; top:56%; width:3%; color:#FF2E7E"><svg class="turn" viewBox="-50 -50 100 100"><use href="#daisy" /></svg></div>
+    <div class="deco" style="left:88%; top:52%; width:3.4%; color:#FF6A13"><svg class="turn" viewBox="-50 -50 100 100"><use href="#daisy" /></svg></div>
+    <div class="sign" id="sign">
+      <div class="board">
+        <p class="kick">Juice stand · Open 7 to 7</p>
+        <svg class="sign-wm" viewBox="0 0 1000 220" role="img" aria-label="RussRuss">
+          <defs><clipPath id="sclip"><text x="500" y="168" text-anchor="middle" class="wm-text">RussRuss</text></clipPath></defs>
+          <text x="500" y="168" text-anchor="middle" class="wm-text" fill="#FFE6BF" stroke="#3B1E08" stroke-width="6" paint-order="stroke">RussRuss</text>
+          <g clip-path="url(#sclip)"><g id="signFill" transform="translate(0 -40)"><g data-loop-x><path data-wave="2600,560,14,14,250" fill="#FF2E7E" /></g></g></g>
+        </svg>
+      </div>
+    </div>
+    <img class="srv" src="assets/cup-orange.webp" alt="Sun Up" style="left:33%">
+    <img class="srv" src="assets/cup-green.webp" alt="Garden Party" style="left:44%">
+    <img class="srv" src="assets/cup-pink.webp" alt="Berry Beet" style="left:55%">
+    <img class="srv" src="assets/cup-mango.webp" alt="Gold Rush" style="left:66%">
+  </div>
+
+  <div class="curtain" id="curtain" aria-hidden="true">
+    <div class="awn"></div>
+    <div class="curtain-copy"><p class="kick">Last stop</p><p class="curtain-title stripe">Come by the stand.</p></div>
+  </div>
+
+  <div class="fin-ui" id="finUi">
+    <div class="fin-cta"><span class="magnet" data-magnet><a class="btn big" href="#hero" data-cursor="Order">Order for pickup</a></span><span class="pill">Corner of Sample St and 2nd Ave</span></div>
+    <div class="fin-badge-wrap"><svg class="fin-badge" viewBox="0 0 200 200" aria-hidden="true"><use href="#badge7" /></svg></div>
+  </div>
+  <svg class="fin-waves" viewBox="0 0 2000 220" preserveAspectRatio="none" aria-hidden="true">
+    <g data-loop-x><path data-wave="2600,220,40,14,250" fill="#FF2E7E" /></g>
+    <g data-loop-x><path data-wave="2600,220,100,14,250" fill="#FF6A13" /></g>
+    <g data-loop-x><path data-wave="2600,220,160,14,250" fill="#FFC300" /></g>
+  </svg>
+  <p class="fin-foot">RussRuss · Cold-pressed juice · Open 7 to 7 · Sample address</p>
+</section>
+
+<script>
+document.querySelectorAll('[data-star]').forEach(p => {
+  const [n, r1, r2] = p.dataset.star.split(',').map(Number), pts = [];
+  for (let i = 0; i < n * 2; i++) { const r = i % 2 ? r2 : r1, a = Math.PI * i / n - Math.PI / 2; pts.push((r * Math.cos(a)).toFixed(1) + ',' + (r * Math.sin(a)).toFixed(1)); }
+  p.setAttribute('points', pts.join(' '));
+});
+window.RR = {
+  juice: ['#FF6A13', '#FFC300', '#FF2E7E', '#FFF6E2'],
+  wipe: 'iris', irisAt: '28% 50%', wMin: 300, wMax: 800, bounce: 'elastic.out(1, .3)',
+  flavors: [
+    { bg: '#FFFFFF', tint: '#FFC300', word: 'SUN UP', juice: ['#FF6A13', '#FFC300', '#FFF6E2'] },
+    { bg: '#FFFFFF', tint: '#7ED321', word: 'GARDEN', juice: ['#7ED321', '#E6F9C8', '#FFF6E2'] },
+    { bg: '#FFFFFF', tint: '#FF2E7E', word: 'BERRY', juice: ['#FF2E7E', '#FFB3CF', '#FFF6E2'] },
+    { bg: '#FFFFFF', tint: '#FF6A13', word: 'GOLD', juice: ['#FFC300', '#FF6A13', '#FFF6E2'] }
+  ]
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="engine.js"></script>
+<script>
+/* finale: awning drops, rolls up on the stand, the sign swings in and fills, cups land on the counter */
+(() => {
+  const root = document.documentElement;
+  if (!root.classList.contains('anim') || !window.ScrollTrigger) return;
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const fin = $('#finale'), stage = $('#standStage'), curtain = $('#curtain'), sign = $('#sign'), cups = $$('.srv'), ui = $('#finUi'), waves = $('.fin-waves'), foot = $('.fin-foot');
+  const burst = window.RRburst || (() => {});
+  const JU = [['#FF6A13', '#FFC300', '#FFF6E2'], ['#7ED321', '#E6F9C8', '#FFF6E2'], ['#FF2E7E', '#FFB3CF', '#FFF6E2'], ['#FFC300', '#FF6A13', '#FFF6E2']];
+  const cues = [];
+  const at = (p, fn) => cues.push({ p, fn, done: false });
+  const tl = gsap.timeline({ scrollTrigger: { id: 'finale', trigger: fin, start: 'top top', end: '+=320%', pin: true, scrub: 1, invalidateOnRefresh: true,
+    onUpdate: self => { const p = self.progress; cues.forEach(c => { if (!c.done && self.direction > 0 && p >= c.p) { c.done = true; c.fn(); } else if (c.done && p < c.p - .04) c.done = false; }); } } });
+  tl.fromTo(curtain, { yPercent: -105 }, { yPercent: 0, duration: .16, ease: 'back.out(1.25)' }, 0)
+    .fromTo('.curtain-copy', { scale: .6, rotation: -6, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: .1, ease: 'back.out(2)' }, .08)
+    .to('.curtain-copy', { scale: .8, opacity: 0, duration: .05 }, .23)
+    .to(curtain, { yPercent: -105, duration: .17, ease: 'power3.inOut' }, .25)
+    .fromTo(stage, { scale: 1.3 }, { scale: 1, duration: .42, ease: 'power2.out' }, .22)
+    .fromTo('.sweep', { xPercent: -100 }, { xPercent: 100, duration: .4, ease: 'none' }, .3)
+    .fromTo(sign, { yPercent: -190, rotation: -18 }, { yPercent: 0, rotation: 0, duration: .14, ease: 'back.out(1.9)' }, .4)
+    .fromTo('#signFill', { y: 250 }, { y: -40, duration: .14, ease: 'none' }, .5)
+    .fromTo(cups, { y: () => innerHeight * .3, scale: .4, opacity: 0, rotation: i => (i % 2 ? 34 : -34) }, { y: 0, scale: 1, opacity: 1, rotation: 0, duration: .1, ease: 'back.out(2.4)', stagger: .045 }, .56)
+    .fromTo(ui.children, { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: .1, stagger: .03, ease: 'back.out(2)' }, .76)
+    .fromTo(waves, { yPercent: 100 }, { yPercent: 0, duration: .1, ease: 'power2.out' }, .86)
+    .fromTo(foot, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .06 }, .92)
+    .to({}, { duration: .04 });
+  at(.4, () => { for (let k = 0; k < 4; k++) burst(innerWidth * (.15 + .23 * k), innerHeight * .18, ['#FF2E7E', '#FF6A13', '#FFC300', '#FFF6E2'], 22, 1.1); });
+  cups.forEach((c, i) => at(.6 + i * .045, () => { const r = c.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height * .25, JU[i], 22, .9); }));
+  at(.83, () => { const r = $('.fin-cta .btn').getBoundingClientRect(); burst(r.left + r.width / 2, r.top, ['#FF2E7E', '#FFC300', '#FFF6E2'], 26, 1); });
+})();
+</script>
+</body>
+</html>

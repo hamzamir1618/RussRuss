@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RUSSRUSS Sunburst Stand</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2730%27 fill=%27%23FF6A13%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2722%27 fill=%27%23FFC300%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Shrikhand&family=Monoton&family=Righteous&family=Rubik:wght@300..900&display=swap">
+<link rel="stylesheet" href="doc.css">
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="ringP" d="M100,100 m-89,0 a89,89 0 1,1 178,0 a89,89 0 1,1 -178,0" />
+    <path id="ringS" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0" />
+    <path id="archCover" d="M40,330 Q500,0 960,330" />
+  </defs>
+  <symbol id="sparkle" viewBox="-50 -50 100 100"><path d="M0 -50 C5 -12 12 -5 50 0 C12 5 5 12 0 50 C-5 12 -12 5 -50 0 C-12 -5 -5 -12 0 -50 Z" fill="currentColor" /></symbol>
+  <symbol id="daisy" viewBox="-50 -50 100 100"><g fill="currentColor"><ellipse cx="0" cy="-27" rx="12" ry="22" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(45)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(90)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(135)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(180)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(225)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(270)" /><ellipse cx="0" cy="-27" rx="12" ry="22" transform="rotate(315)" /></g><circle r="14" fill="#FFC300" /><circle r="14" fill="none" stroke="#3B1E08" stroke-width="2" stroke-dasharray="1 4" /></symbol>
+  <symbol id="rainbow" viewBox="-52 -52 104 54"><path d="M-50 0 A50 50 0 0 1 50 0 L40 0 A40 40 0 0 0 -40 0 Z" fill="#FF2E7E" /><path d="M-40 0 A40 40 0 0 1 40 0 L30 0 A30 30 0 0 0 -30 0 Z" fill="#FF6A13" /><path d="M-30 0 A30 30 0 0 1 30 0 L20 0 A20 20 0 0 0 -20 0 Z" fill="#FFC300" /></symbol>
+  <symbol id="squiggle" viewBox="0 0 100 20"><path d="M3 10 Q11.5 1 20 10 T37 10 T54 10 T71 10 T88 10 T97 10" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" /></symbol>
+  <symbol id="sunicon" viewBox="-50 -50 100 100"><circle r="18" fill="currentColor" /><g stroke="currentColor" stroke-width="6" stroke-linecap="round"><path d="M0 -28 V-44 M0 28 V44 M-28 0 H-44 M28 0 H44 M-20 -20 L-31 -31 M20 20 L31 31 M-20 20 L-31 31 M20 -20 L31 -31" /></g></symbol>
+  <symbol id="badge6" viewBox="0 0 200 200"><polygon data-star="18,98,84" transform="translate(100 100)" fill="#FF2E7E" /><circle cx="100" cy="100" r="70" fill="#FFF6E2" /><text class="ringtxt" style="font-size:12px; letter-spacing:2.6px"><textPath href="#ringS" textLength="370">PRESSED DAILY • 350 ML • NEVER HEATED •</textPath></text><text x="100" y="114" text-anchor="middle" style="font:400 40px Shrikhand, serif" fill="#FF6A13">6am</text></symbol>
+</svg>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#overview">RUSSRUSS · Sunburst Stand</a>
+    <nav class="tabs" aria-label="Sections"><a href="#overview">Overview</a><a href="#type">Type</a><a href="#voice">Voice</a><a href="#deco">Decoration</a><a href="#made">How it's made</a><a href="#motion">Motion</a><a href="#transitions">Transitions</a><a href="#build">Build</a></nav>
+  </div>
+</header>
+
+<main class="ch-a">
+<!-- ================= OVERVIEW ================= -->
+<section class="wrap fcover" id="overview">
+  <div class="fcover-title">
+    <span class="label">Landing page · final design doc · v1.0 · 12 Oct 2026</span>
+    <svg viewBox="0 0 1000 380" role="img" aria-label="Sunburst Stand">
+      <text class="archT" fill="#FFC300" transform="translate(13 13)"><textPath href="#archCover" startOffset="50%" text-anchor="middle">Sunburst Stand</textPath></text>
+      <text class="archT" fill="#FF6A13" transform="translate(9 9)"><textPath href="#archCover" startOffset="50%" text-anchor="middle">Sunburst Stand</textPath></text>
+      <text class="archT" fill="#FF2E7E" transform="translate(4.5 4.5)"><textPath href="#archCover" startOffset="50%" text-anchor="middle">Sunburst Stand</textPath></text>
+      <text class="archT" fill="#FFF6E2" stroke="#3B1E08" stroke-width="5" paint-order="stroke"><textPath href="#archCover" startOffset="50%" text-anchor="middle">Sunburst Stand</textPath></text>
+    </svg>
+    <p class="lede">The look for the RussRuss landing page: a juice stand at golden hour, built on a white page. This document is the reference for building it. Every animation on this page runs live.</p>
+    <div class="changes">
+      <div><b>Type</b>Titles now use 70s treatments: striped extrusions, arched and rolling lines, text rings and Monoton numerals.</div>
+      <div><b>Voice</b>Copy is rewritten to be plain and specific. It says what we do and when, without the pitch.</div>
+      <div><b>How it's made</b>Each step sits in a circular frame with a turning text ring, so no photo gets cut off, and the background is layered with stickers.</div>
+      <div><b>Finale</b>The page now ends on the stand. An awning drops and rolls up on it, the sign swings in and fills with juice, and the cups land on the counter. The orange spin-through leads into the steps.</div>
+    </div>
+  </div>
+  <div>
+    <div class="frame" data-frame><iframe src="sunburst.html" title="Sunburst Stand prototype" loading="lazy"></iframe><button class="veil" type="button"><span>Click to play here</span></button><button class="btn sm ghost release" type="button">Release scroll</button></div>
+    <div class="frame-bar"><span class="frame-note">The full page, live. Click the frame to scroll inside it.</span><a class="btn sm" href="sunburst.html" target="_blank" rel="noopener">Open full screen ↗</a></div>
+  </div>
+</section>
+
+<!-- ================= TYPE ================= -->
+<section class="chapter" id="type">
+  <div class="wrap">
+    <div class="sec-h big"><div><span class="label">01 · Typography</span><h2 class="h-stripe">Type that <span class="pop">shows up</span></h2></div><p>Four faces, each with one job. The display face never appears plain: it always gets an extrusion, an arc, a ring or a rolling baseline.</p></div>
+
+    <div class="faces">
+      <article class="face"><span class="label">Display · Shrikhand</span><p class="spec-shrik stripe-s">Squeezed</p><p>Headlines and section titles. Always cream with a cocoa outline and a stripe shadow, or tangerine with a two-step drop.</p></article>
+      <article class="face"><span class="label">Numerals · Monoton</span><p class="spec-mono">5:00</p><p>Big numbers and the giant flavor word behind the products. Single words and numerals only, never sentences.</p></article>
+      <article class="face"><span class="label">Labels · Righteous</span><p class="spec-right">Step 03 · Press</p><p>Kickers, ring text, buttons, nav. Always uppercase with 0.12–0.16em tracking.</p></article>
+      <article class="face"><span class="label">Body · Rubik 300–900</span><p class="spec-rubik">We buy what's ripe that morning.</p><p>Body copy at 500. Step titles swell from 300 to 800 as they arrive.</p></article>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Treatments</h3><p>Live and adjustable. Each one has a job, so a title uses one treatment, two at most.</p></div>
+      <div class="tiles">
+        <article class="mo"><div class="mo-head"><h4>Stripe extrusion</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="t-stripe"></div><div class="mo-note"><dl><dt>Use</dt><dd>Hero headline, section titles, the wipe title</dd><dt>Build</dt><dd>12 stepped text-shadows (4 pink, 4 tangerine, 4 sunflower), cocoa text-stroke, cream face</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Rolling baseline</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="t-wavy"></div><div class="mo-note"><dl><dt>Use</dt><dd>One line per page: the second line of the hero</dd><dt>Build</dt><dd>Per-letter <code>top: sin(i × 34° + phase)</code>, with the phase animated through <code>@property</code></dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Arched title</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="t-arch"></div><div class="mo-note"><dl><dt>Use</dt><dd>Section openers: "Today's press", this doc's cover</dd><dt>Build</dt><dd>SVG <code>textPath</code> on a quadratic curve, with four stacked copies offset for the stripe</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Text ring &amp; badge</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="t-ring"></div><div class="mo-note"><dl><dt>Use</dt><dd>Around the sun, the step frames, the starburst stickers</dd><dt>Build</dt><dd>Righteous caps on a circular <code>textPath</code>, with <code>textLength</code> fitted to the circumference. Turns once every 40–50s.</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Monoton count</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="t-count"></div><div class="mo-note"><dl><dt>Use</dt><dd>Step numbers, the flavor word in the product row</dd><dt>Build</dt><dd>Counts up while a pink fill rises through the inline strokes (text-clipped gradient)</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Stacked lockup</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="t-stack"></div><div class="mo-note"><dl><dt>Use</dt><dd>Every step and every section head</dd><dt>Order</dt><dd>Righteous kicker → Monoton number → Righteous unit → Rubik title (weight swell) → Rubik body</dd></dl></div></article>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Scale</h3><p>Sizes are fluid between a phone and a 1440px desktop.</p></div>
+      <div class="tbl"><table>
+        <thead><tr><th>Role</th><th>Face</th><th>Size</th><th>Treatment</th><th>Where</th></tr></thead>
+        <tbody>
+          <tr><td><b>Hero headline</b></td><td>Shrikhand</td><td><code>clamp(3rem, 10.4vw, 10.4rem)</code></td><td>Stripe extrusion, −5°</td><td>"Squeezed"</td></tr>
+          <tr><td><b>Hero second line</b></td><td>Shrikhand</td><td><code>clamp(2.6rem, 8.6vw, 8.6rem)</code></td><td>Tangerine pop + rolling baseline</td><td>"this morning."</td></tr>
+          <tr><td><b>Section title</b></td><td>Shrikhand</td><td>132px in a 1000-unit SVG</td><td>Arched + stripe</td><td>"Today's press"</td></tr>
+          <tr><td><b>Big number</b></td><td>Monoton</td><td><code>clamp(4rem, 10vw, 10rem)</code></td><td>Juice fill</td><td>5:00, 3.2, 4, 72</td></tr>
+          <tr><td><b>Background word</b></td><td>Monoton</td><td><code>clamp(7rem, 26vw, 28rem)</code></td><td>Flavor tint at 55%</td><td>SUN UP, GARDEN…</td></tr>
+          <tr><td><b>Kicker / label</b></td><td>Righteous</td><td>.86rem, 0.16em</td><td>Uppercase</td><td>"Step 01 · Pick"</td></tr>
+          <tr><td><b>Step title</b></td><td>Rubik</td><td><code>clamp(1.8rem, 3.6vw, 3.4rem)</code></td><td>Weight 300→800 on entry</td><td>"Squeezed, not spun."</td></tr>
+          <tr><td><b>Body</b></td><td>Rubik 500</td><td>1.05rem / 1.55</td><td>None</td><td>Step details, card copy</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VOICE ================= -->
+<section class="chapter" id="voice">
+  <div class="wrap">
+    <div class="sec-h big"><div><span class="label">02 · Voice</span><h2 class="h-stripe">Say what <span class="pop">happens</span></h2></div><p>We sound like the person behind the counter: plain, specific and a little dry. The type is loud enough already, so the words don't need to be.</p></div>
+    <div class="rules">
+      <div><b>Facts over adjectives</b>Times, weights, ingredients and steps. "Pressed at 6 am" says more than "fresh".</div>
+      <div><b>Short, and in "we"</b>Most sentences under twelve words. We do the work, so we say "we".</div>
+      <div><b>One joke per section</b>A light aside is fine ("The ginger shows up a second later"). Two is a bit.</div>
+      <div><b>No health claims</b>No detox, cleanse benefits, superfoods or anything a label can't back up.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><h3>Before &amp; after</h3><p>Lines from the earlier drafts, rewritten.</p></div>
+      <div class="tbl"><table class="ba">
+        <thead><tr><th>Where</th><th>Before</th><th>After</th></tr></thead>
+        <tbody>
+          <tr><td>Hero</td><td><s>Squeezed sunshine.</s></td><td>Squeezed this morning.</td></tr>
+          <tr><td>Product title</td><td><s>Pick your sunshine</s></td><td>Today's press</td></tr>
+          <tr><td>Sun Up</td><td><s>Breakfast in a cup.</s></td><td>Orange, carrot and a thumb of ginger. The first thing we press every morning.</td></tr>
+          <tr><td>Gold Rush</td><td><s>Tastes like July.</s></td><td>Pineapple, mango and ginger. The ginger shows up a second later.</td></tr>
+          <tr><td>Step 2</td><td><s>A whole fruit bowl, drinkable.</s></td><td>Everything is washed and cut by hand. Peels off, seeds out.</td></tr>
+          <tr><td>Step 4</td><td><s>Made today, gone by Thursday.</s></td><td>We don't pasteurize, so it doesn't keep forever. Drink it within three days.</td></tr>
+          <tr><td>Outro</td><td><s>Sunshine, by the cup.</s></td><td>Open 7 to 7, or until the oranges run out.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="sec two-col">
+      <div class="words"><span class="label">We avoid</span><p><s>sunshine in a cup</s> <s>burst of flavor</s> <s>vibrant</s> <s>elevate</s> <s>guilt-free</s> <s>detox</s> <s>superfood</s> <s>experience</s> <s>journey</s> <s>!!</s></p></div>
+      <div class="words"><span class="label">We use</span><p><span>6 am</span> <span>pressed</span> <span>cut by hand</span> <span>3.2 lb</span> <span>350 ml</span> <span>within three days</span> <span>ripe</span> <span>we</span> <span>open 7 to 7</span></p></div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><h3>Microcopy</h3></div>
+      <div class="micro"><div><span class="label">Primary button</span>Order for pickup</div><div><span class="label">Card button</span>Add</div><div><span class="label">Scroll cue</span>Scroll down</div><div><span class="label">Loader</span>Pressing 047%</div><div><span class="label">Empty bag</span>Nothing in the bag yet.</div><div><span class="label">Sold out</span>Gone for today. Back at 6 am.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DECORATION ================= -->
+<section class="chapter" id="deco">
+  <div class="wrap">
+    <div class="sec-h big"><div><span class="label">03 · Color &amp; decoration</span><h2 class="h-stripe">A little <span class="pop">clutter</span></h2></div><p>Like a stand covered in hand-painted signs: white page, sunset colors, stickers everywhere around the edges, and a clear space kept around the product and the headline.</p></div>
+    <div class="swatches six">
+      <div class="sw"><div style="background:#FF2E7E"></div><p><b>Hot pink</b>Buttons, stripe layer 1 <code>#FF2E7E</code></p></div>
+      <div class="sw"><div style="background:#FF6A13"></div><p><b>Tangerine</b>Second line, stripe layer 2 <code>#FF6A13</code></p></div>
+      <div class="sw"><div style="background:#FFC300"></div><p><b>Sunflower</b>Sun, stripe layer 3 <code>#FFC300</code></p></div>
+      <div class="sw"><div style="background:#7ED321"></div><p><b>Lime</b>Leaves, Garden Party <code>#7ED321</code></p></div>
+      <div class="sw"><div style="background:#3B1E08"></div><p><b>Cocoa</b>Text, outlines, button base <code>#3B1E08</code></p></div>
+      <div class="sw"><div style="background:#FFF6E2"></div><p><b>Cream</b>Letter faces, pills, cards <code>#FFF6E2</code></p></div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><h3>Sticker kit</h3><p>Vector stickers in palette colors. Each one has a motion of its own: twinkle, turn or bob.</p></div>
+      <div class="deco-kit" id="decoKit"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><h3>Clutter, dialed in</h3><p>Drag to add layers. The dashed outline is the clear zone that stickers never enter.</p></div>
+      <div class="lab"><div class="lab-stage composer" data-composer></div><div class="lab-ctl"><label class="label" for="dens" style="margin:0">Density</label><input type="range" id="dens" min="0" max="3" step="1" value="2"><output id="densO">Hero</output><button class="replay" type="button" id="zoneBtn" aria-pressed="true">Hide clear zone</button></div><div class="lab-body"><p>0 is bare, 1 suits the product row, 2 is the hero and the steps, and 3 is the outro, where nothing competes with it.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT'S MADE ================= -->
+<section class="chapter" id="made">
+  <div class="wrap">
+    <div class="sec-h big"><div><span class="label">04 · How it's made</span><h2 class="h-stripe">Four <span class="pop">steps</span></h2></div><p>The manifesto became a walkthrough: pick, cut, press, pour. Each step photo sits in a circular frame, so the press, cut off at the edges in its original photo, now reads as a clean round window.</p></div>
+    <div class="made">
+      <div class="lab"><div class="lab-stage made-stage" data-steps></div><div class="lab-ctl"><button class="play" type="button" id="stepPlay" aria-label="Play">▶</button><div class="step-tabs" id="stepTabs"><button type="button" class="on">Pick</button><button type="button">Cut</button><button type="button">Press</button><button type="button">Pour</button></div></div></div>
+      <div class="anat">
+        <span class="label">Frame anatomy</span>
+        <ol>
+          <li><b>Text ring</b>Righteous caps on a circle path: "STEP 03 • PRESS •". Turns every 40s.</li>
+          <li><b>Rings</b>A 5px pink or tangerine ring at 80% diameter and a dotted cocoa ring at 97%.</li>
+          <li><b>Window</b>A circle clip at 79% diameter over a sunflower-to-tangerine gradient with slow rays.</li>
+          <li><b>Photo fit</b>Pick: four fruits composed inside. Cut: contained, spinning. Press: cropped to the spout, so the photo's own edges disappear. Pour: contained at 94% height.</li>
+          <li><b>Around it</b>A rainbow arc below, daisies, sparkles, a sun icon, halftone dots and a squiggle, all in motion.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ASSETS + MOTION ================= -->
+<section class="chapter" id="motion">
+  <div class="wrap">
+    <div class="sec-h big"><div><span class="label">05 · Assets &amp; motion</span><h2 class="h-stripe">Everything <span class="pop">moves</span></h2></div><p>Your photos, cut out to transparent WebP, and the animations that bring them in. Tiles play as you reach them.</p></div>
+    <div class="kit" id="kitA"></div>
+    <div class="sec">
+      <div class="tiles">
+        <article class="mo"><div class="mo-head"><h4>Juice-fill wordmark</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-loader"></div><div class="mo-note"><dl><dt>Scene</dt><dd>Loader and outro</dd><dt>Timing</dt><dd>1.7s, power2.inOut, the wave loops underneath</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Drop, squash, splash</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-drop"></div><div class="mo-note"><dl><dt>Scene</dt><dd>Hero entry</dd><dt>Timing</dt><dd>Fall .62s power3.in → squash .1s → elastic settle .9s, splash 1s expo.out</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Sunset sun &amp; rays</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-sun"></div><div class="mo-note"><dl><dt>Scene</dt><dd>Hero backdrop</dd><dt>Behavior</dt><dd>The disc pops in with elastic, rays turn every 60s. Hover speeds them up.</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Wave bands</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-waves"></div><div class="mo-note"><dl><dt>Scene</dt><dd>Hero base</dd><dt>Timing</dt><dd>Bands rise in stagger, then loop at 1.4–2.2s per wavelength</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Pointer depth</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-depth"></div><div class="mo-note"><dl><dt>Scene</dt><dd>Hero</dd><dt>Behavior</dt><dd>Fruit and stickers shift against the pointer by depth (0.2× to 2.3×) and float when idle</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Card tilt &amp; turning cup</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-card"></div><div class="mo-note"><dl><dt>Scene</dt><dd>Product row</dd><dt>Behavior</dt><dd>The slider stands in for scroll: the cup turns from −24° to +12° as the card crosses the screen. Hover tilts the card.</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Press &amp; pour</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-press"></div><div class="mo-note"><dl><dt>Scene</dt><dd>Step 3</dd><dt>Timing</dt><dd>Lever push .35s, squash, juice burst from the spout</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Sign drop &amp; fill</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-sign"></div><div class="mo-note"><dl><dt>Scene</dt><dd>Finale</dd><dt>Timing</dt><dd>Drops in on its ropes with back.out(1.9) and swings to rest, then the wordmark fills with juice like the loader</dd></dl></div></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRANSITIONS ================= -->
+<section class="chapter" id="transitions">
+  <div class="wrap">
+    <div class="sec-h big"><div><span class="label">06 · Transitions</span><h2 class="h-stripe">Scene to <span class="pop">scene</span></h2></div><p>Drag a slider to step through a transition frame by frame, or press play. The recommended pick for each slot is marked.</p></div>
+    <div class="labs">
+      <article class="lab"><div class="lab-stage" data-lab="a-iris"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Sun iris <span class="tag live">In the page · hero → products</span></h4><p>The rays speed up and a white circle opens out of the sun, bringing "Today's press" with it.</p></div></article>
+      <article class="lab"><div class="lab-stage" data-lab="a-waverise"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Wave rise <span class="tag">Alternate · hero → products</span></h4><p>The three wave bands from the bottom of the hero rise over the screen, and a white wave lifts the products in.</p></div></article>
+      <article class="lab"><div class="lab-stage" data-lab="a-orange"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Orange spin-through <span class="tag live">In the page · products → steps</span></h4><p>The orange half spins in from the corner and fills the screen, then the steps open through its pith. Runs over the first 35% of the steps pin, so it leads straight into the circular frames.</p></div></article>
+      <article class="lab"><div class="lab-stage" data-lab="a-finale"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Awning drop &amp; stand finale <span class="tag live">In the page · steps → end</span></h4><p>The awning drops over the steps with "Come by the stand." and rolls up on the stand. The sign swings down and fills with juice like the loader did, the four cups land on the counter one by one, then the button and the "See you at 7" sticker arrive and the wave bands close the page. Pinned for 320vh.</p></div></article>
+      <article class="lab"><div class="lab-stage" data-lab="a-dive"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Sunset dive <span class="tag">Alternate</span></h4><p>The camera dives into the sun disc, the sunset burns out to white and the next scene fades up.</p></div></article>
+      <article class="lab"><div class="lab-stage" data-lab="a-splash"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Splash burst <span class="tag">Accent</span></h4><p>A fast cut for small moments, like adding a juice to the bag. Too quick for a full section change.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMPONENTS + BUILD ================= -->
+<section class="chapter" id="build">
+  <div class="wrap">
+    <div class="sec-h big"><div><span class="label">07 · Components &amp; build</span><h2 class="h-stripe">The <span class="pop">parts</span></h2></div><p>The pieces engineering builds once and reuses.</p></div>
+    <div class="comps">
+      <div class="comp-col">
+        <div class="comp-row"><span class="label">Primary button · Righteous caps</span><div class="items"><button class="b-main" type="button" data-burst="a">Order for pickup</button></div></div>
+        <div class="comp-row"><span class="label">Pills</span><div class="items"><span class="pill">Pressed at 6 am</span><span class="pill">350 ml cups</span><span class="pill hot">Never heated</span></div></div>
+        <div class="comp-row"><span class="label">Starburst sticker</span><div class="items"><svg class="turn-slow" viewBox="0 0 200 200" style="width:130px"><use href="#badge6" /></svg></div></div>
+      </div>
+      <div class="comp-row" style="justify-items:center"><span class="label" style="justify-self:start">Product card (hover to tilt)</span>
+        <article class="pcard" data-tilt style="--fc:#FFC300"><div class="st"><div class="rays"></div><img class="cupi" src="assets/cup-orange.webp" alt="Sun Up"></div><div class="bd"><h5>Sun Up</h5><p>Orange, carrot and a thumb of ginger. The first thing we press every morning.</p></div><div class="ft"><span class="pr">$9.50</span><button class="b-main" type="button" data-burst="a" style="padding:11px 16px; font-size:.82rem; box-shadow:0 6px 0 -2px #3B1E08">Add</button></div></article>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><h3>Scene map</h3></div>
+      <div class="tbl"><table>
+        <thead><tr><th>Moment</th><th>What happens</th><th>Scroll / time</th></tr></thead>
+        <tbody>
+          <tr><td><b>Load</b></td><td>The wordmark fills pink, then the curtain lifts</td><td>1.7s, scroll locked</td></tr>
+          <tr><td><b>Hero entry</b></td><td>The cup drops and splashes, letters rise, the stripe shadow peels out, fruit and stickers fly in</td><td>1.3s</td></tr>
+          <tr><td><b>Hero → products</b></td><td>Sun iris (alternate: wave rise)</td><td>Pinned 160vh</td></tr>
+          <tr><td><b>Products</b></td><td>The row scrolls sideways, the Monoton word and accent change per flavor, cups turn</td><td>~330vh pinned</td></tr>
+          <tr><td><b>Products → steps</b></td><td>Orange spin-through: the orange fills the screen, then the steps open through its pith</td><td>First 35% of the pin</td></tr>
+          <tr><td><b>Steps</b></td><td>Frames swap, numbers count and fill, titles swell</td><td>380vh pinned</td></tr>
+          <tr><td><b>Steps → finale</b></td><td>Awning drop, then the stand: sign swings in and fills, cups land on the counter, CTA and sticker arrive, waves close</td><td>Pinned 320vh</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="sec">
+      <div class="notes">
+        <div><b>Stack</b>GSAP 3.12 + ScrollTrigger + Lenis, about 40 KB gzipped. All motion lives in one <code>engine.js</code> with a small config per page.</div>
+        <div><b>Fonts</b>Shrikhand, Monoton, Righteous and Rubik, all free on Google Fonts. Self-host the four files in production.</div>
+        <div><b>Modern CSS</b>The rolling baseline needs CSS <code>sin()</code> and <code>@property</code>. Both are supported in current Chrome, Safari and Firefox; older browsers get a straight line.</div>
+        <div><b>Assets</b>20 photos became 35 transparent WebP cutouts, 2.7 MB in total. All decoration is inline SVG, so it adds nothing to the download.</div>
+        <div><b>Reduced motion</b>No loader, no pins, no particles, and stickers stand still. Every section renders as a static page.</div>
+        <div><b>Sample content</b>Prices, nutrition, hours and the address are placeholders.</div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><h3>Open questions</h3></div>
+      <ol class="qs">
+                <li>Real menu, prices and nutrition, plus the stand's address and hours?</li>
+        <li>Is "Sun Up / Garden Party / Berry Beet / Gold Rush" the actual lineup, or placeholders for now?</li>
+        <li>What framework is the app built in? The engine drops into React or Next with a small wrapper.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="wrap">RUSSRUSS · Sunburst Stand · Final design doc v1.0 · Photos: your Nano Banana set, cut out for web · All copy, prices and addresses are samples</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="doc-core.js"></script>
+<script src="labs.js"></script>
+<script src="doc-init.js"></script>
+</body>
+</html>

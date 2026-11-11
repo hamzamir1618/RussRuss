@@ -1,0 +1,45 @@
+/* RussRuss the rabbit: slots the shared 3D canvas moves into (see src/three/stage.ts). */
+.mascot-slot { position: absolute; pointer-events: none; }
+.mascot-canvas { display: block; width: 100%; height: 100%; pointer-events: auto; }
+.mascot-still { display: block; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
+
+/* hero: his own layer in front of the big cup's lower left, above the headline, under the buttons and front fruit.
+   .hero-rabbit is a .par (pointer depth), .rb-scroll flies him past the camera on scroll (both GSAP: no transforms here) */
+.hero-rabbit { left: 13%; bottom: 9%; width: clamp(220px, 24vw, 380px); height: 56%; z-index: 11; pointer-events: none; }
+.rb-scroll { position: absolute; inset: 0; }
+.ms-hero { inset: 0; }
+
+/* today's press: rides the progress bar; Press.tsx sets --rp (0..1) from the row's progress */
+.press-rider { position: absolute; z-index: 3; bottom: calc(clamp(18px, 3vh, 30px) + 4px); width: 156px; height: 178px; left: calc(var(--gut) + var(--rp, 0) * (100% - 2 * var(--gut) - 156px)); pointer-events: none; }
+.ms-press { inset: 0; }
+.ms-press .mascot-canvas { pointer-events: none; } /* never in the way of a card's Add button */
+
+/* how a cup gets made: at the photo frame's lower right (inside .figs, so he spins in with it) */
+.ms-steps { z-index: 3; right: -16%; bottom: -8%; width: 52%; height: 70%; }
+
+/* finale: behind the counter, left of the cups (% of the stand photo; the bottom edge is the counter's back edge) */
+.ms-finale { z-index: 2; left: 16%; width: 17%; bottom: 35%; height: 32%; }
+
+/* bag reaction: pops up from the bottom-right corner of the screen */
+.ms-pop { position: fixed; right: clamp(8px, 3vw, 40px); bottom: 0; width: 170px; height: 200px; z-index: 58; }
+.ms-pop:empty { display: none; }
+
+@media (max-width: 700px) {
+  .hero-rabbit { left: auto; right: 0; bottom: 34%; width: 48vw; height: 30%; }
+  .ms-hero .mascot-still { scale: -1 1; } /* the still faces right; on phones he stands on the cup's right side */
+  .press-rider { width: 100px; height: 114px; left: calc(var(--gut) + var(--rp, 0) * (100% - 2 * var(--gut) - 100px)); }
+  .ms-finale { left: 42%; width: 16%; bottom: 37%; height: 25%; }
+  .ms-pop { width: 120px; height: 150px; }
+}
+
+/* dev lab (?rabbit) */
+.lab { position: fixed; inset: 0; display: grid; grid-template-rows: 1fr auto; background: #FFFFFF; }
+.lab .rays { position: absolute; width: 150vmax; height: 150vmax; left: 50%; top: 55%; margin: -75vmax 0 0 -75vmax; }
+.ms-lab { position: relative; z-index: 1; }
+.lab-bar { position: relative; z-index: 2; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 16px; }
+
+/* licence credit for the rabbit model (footer, and the finale on the landing page) */
+.model-credit { margin: 0; font: 500 .74rem/1.4 var(--body); color: var(--muted); }
+.model-credit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.model-credit a:hover { color: var(--pink); }
+.fin-credit { position: absolute; right: clamp(16px, 3vw, 36px); bottom: 12px; z-index: 19; max-width: calc(100% - 32px); color: var(--cocoa); font-size: .66rem; text-align: right; }

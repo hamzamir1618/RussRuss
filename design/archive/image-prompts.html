@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RUSSRUSS Image Prompts</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2730%27 fill=%27%23FF6A13%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2722%27 fill=%27%23FFC300%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+</head>
+<body>
+<style>
+/* Layout: utility page, one tab per art direction; prompts broken into labeled fields so every aspect is explicit. */
+:root {
+  --bg: #FAFAF7; --card: #FFFFFF; --fg: #1A1D1B; --muted: #626864; --line: #E3E5E1; --soft: #F3F4F0;
+  --a1: #FF6A13; --a2: #FF2E7E;
+  --sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #141615; --card: #1D201E; --fg: #F1F2EE; --muted: #A3A9A5; --line: #313532; --soft: #262927; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #141615; --card: #1D201E; --fg: #F1F2EE; --muted: #A3A9A5; --line: #313532; --soft: #262927; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 500 15px/1.55 var(--sans); }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 32px clamp(16px, 4vw, 40px) 80px; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.05; margin: 0 0 10px; letter-spacing: -.02em; text-wrap: balance; }
+h2 { text-wrap: balance; }
+.lede { color: var(--muted); max-width: 72ch; margin: 0; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin: 24px 0 26px; }
+@media (max-width: 860px) { .two { grid-template-columns: 1fr; } }
+.box { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; }
+.box h3 { margin: 0 0 10px; font-size: 1rem; }
+.box ol { margin: 0; padding-left: 20px; display: grid; gap: 7px; font-size: .9rem; }
+.box code { font: 500 .8rem/1.4 var(--mono); background: var(--soft); padding: 1px 5px; border-radius: 4px; }
+.order { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.order span { font: 600 .7rem/1 var(--mono); padding: 6px 8px; border-radius: 6px; background: var(--soft); }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding: 10px 0; }
+.tab { font: 600 .9rem/1 var(--sans); padding: 11px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.tab .dots { display: inline-flex; }
+.tab .dots i { width: 10px; height: 10px; border-radius: 50%; margin-left: -3px; border: 1.5px solid var(--card); }
+.tab[aria-selected="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.dir { margin-top: 18px; border-radius: 22px; padding: clamp(18px, 3vw, 28px); background: linear-gradient(120deg, var(--a1), var(--a2)); color: #fff; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; }
+.dir h2 { margin: 0 0 6px; font-size: clamp(1.6rem, 3.4vw, 2.4rem); letter-spacing: -.02em; line-height: 1; }
+.dir p { margin: 0; max-width: 58ch; }
+.dir .meta { display: grid; gap: 8px; align-content: start; font-size: .85rem; }
+.sw { display: flex; flex-wrap: wrap; gap: 6px; }
+.sw span { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.18); border-radius: 999px; padding: 4px 10px 4px 4px; font: 600 .72rem/1 var(--mono); }
+.sw span i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(255,255,255,.7); }
+@media (max-width: 760px) { .dir { grid-template-columns: 1fr; } }
+.block { margin-top: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 18px; display: grid; gap: 8px; }
+.block-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.label { font: 600 .68rem/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.block dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 14px; font-size: .9rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 14px; margin-top: 14px; }
+.pr { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: grid; grid-template-rows: auto auto 1fr auto; min-width: 0; }
+.pr-top { height: 6px; background: linear-gradient(90deg, var(--a1), var(--a2)); }
+.pr-head { padding: 14px 16px 0; display: grid; gap: 6px; }
+.pr-head .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { font: 600 .68rem/1 var(--mono); padding: 5px 8px; border-radius: 999px; background: var(--soft); color: var(--fg); }
+.chip.scene { background: var(--fg); color: var(--bg); }
+.chip.ref { background: transparent; border: 1px solid var(--line); }
+.pr h3 { margin: 4px 0 0; font-size: 1.08rem; letter-spacing: -.01em; }
+.fields { margin: 0; padding: 10px 16px 14px; display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 7px 12px; font-size: .86rem; }
+.fields dt { font: 600 .64rem/1.7 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.fields dd { margin: 0; }
+.fields dt.cam, .fields dt.cam + dd { color: var(--fg); }
+.fields dt.cam { background: linear-gradient(90deg, var(--a1), var(--a2)); color: #fff; border-radius: 4px; padding: 0 5px; align-self: start; }
+.pr-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 16px; border-top: 1px solid var(--line); }
+.pr-foot code { font: 500 .74rem/1.3 var(--mono); color: var(--muted); overflow-wrap: anywhere; }
+.btn { font: 600 .8rem/1 var(--sans); padding: 9px 14px; border-radius: 999px; border: 1px solid var(--fg); background: var(--fg); color: var(--bg); cursor: pointer; white-space: nowrap; }
+.btn.ghost { background: transparent; color: var(--fg); }
+.btn:focus-visible, .tab:focus-visible { outline: 3px solid var(--a1); outline-offset: 2px; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 150%); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 999px; font: 600 .82rem/1 var(--sans); transition: transform .3s cubic-bezier(.2,.9,.1,1); z-index: 20; }
+.toast.show { transform: translate(-50%, 0); }
+.hidden-copy { position: absolute; left: -9999px; white-space: pre-wrap; }
+</style>
+
+<div class="wrap">
+  <h1>RUSSRUSS image prompts</h1>
+  <p class="lede">Four art directions for the landing page, each with its own asset set for Nano Banana. Every prompt is split into labeled fields, so the subject, pose, camera position and framing are each stated on their own and can't blur together. Copy builds the full prompt in this order:</p>
+  <div class="order" aria-label="Prompt field order"><span>SHOT</span><span>SUBJECT</span><span>POSE</span><span>CAMERA</span><span>WHAT THE ANGLE SHOWS</span><span>FRAMING</span><span>LIGHTING</span><span>BACKGROUND</span><span>STYLE</span><span>AVOID</span></div>
+
+  <div class="two">
+    <div class="box">
+      <h3>Workflow</h3>
+      <ol>
+        <li>Generate prompt 01 of a direction first. Then attach it as the reference for 02 so the flavor set matches exactly.</li>
+        <li><b>Cutouts</b> come out on white for background removal. <b>Scenes</b> are full-frame backgrounds, so don't cut them out.</li>
+        <li>Save with the filename shown into <code>assets/A</code> … <code>assets/D</code> in the project folder, and I'll wire them in.</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h3>If the angle still comes back wrong</h3>
+      <ol>
+        <li><b>Fix it with an edit, not a re-roll.</b> Keep the result and reply: <code>Keep everything the same, but move the camera below the cup so it looks up at it.</code> Nano Banana is much better at changing an existing image than at getting the angle on the first try.</li>
+        <li><b>Tilt in a second step.</b> If the pose is the problem, get the object right upright first, then send: <code>Rotate the cup so its top leans to the right, toward 1 o'clock.</code></li>
+        <li><b>Attach an angle reference.</b> Add any photo or rough sketch that has the camera angle you want, and add: <code>Match only the camera angle and tilt of the second image. Ignore its subject and colors.</code></li>
+        <li><b>Use clock directions, not degrees.</b> The prompts already say "top leans toward 1 o'clock", which models follow more reliably than angle numbers.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div id="panel" role="tabpanel"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<textarea class="hidden-copy" id="hiddenCopy" aria-hidden="true" tabindex="-1"></textarea>
+
+<script>
+const BG_CUTOUT = 'Pure flat white background (#FFFFFF) filling the whole frame. No floor, no horizon, no shadow on the background, no reflection, so the subject can be cut out cleanly.';
+const AVOID_BASE = 'No text, no logos, no hands, no people, no extra props.';
+const D = [
+  { id: 'A', name: 'Sunburst Stand', line: 'A 1970s roadside juice stand in full sun: a huge low sun, scalloped awnings, round groovy type and bouncy motion. Warm, loud and friendly.',
+    pal: [['Tangerine', '#FF6A13'], ['Hot pink', '#FF2E7E'], ['Sunflower', '#FFC300'], ['Lime', '#7ED321'], ['Sky', '#2EC4F1']], fonts: 'Shrikhand · Rubik', a1: '#FF6A13', a2: '#FF2E7E',
+    light: 'Bright, hard midday sunlight from the upper left. Crisp, short shadows on the subject itself. Sparkling highlights on wet surfaces.',
+    style: 'Vibrant 1970s-inspired commercial photograph, punchy warm saturated colors like a vintage citrus advert, razor sharp, fine film grain.',
+    p: [
+      { t: 'Hero cup, bouncing', k: 'cutout', r: '2:3', f: 'A-hero-cup', shot: 'Low-angle worm\'s-eye product photo of a juice cup jumping in mid-air.',
+        subject: 'A clear plastic takeaway cup of fresh orange juice with a domed clear lid and a red-and-white striped paper straw. Cold condensation beads cover the cup.',
+        pose: 'The cup is in mid-air, jumping upward. It is tilted so its top leans to the right, toward 1 o\'clock (about 20 degrees off vertical). The juice inside sloshes up against the left wall. Four or five droplets fly off the lid.',
+        camera: 'The camera is low, below the cup, pointing upward at about 30 degrees (worm\'s-eye view). 28mm wide-angle lens, close to the cup.',
+        shows: 'The bottom of the cup looks large and its base underside is visible. The lid looks smaller and further away, and the cup appears to tower over the viewer.',
+        framing: 'Vertical 2:3. The cup fills about 70% of the frame height, centered, with clear space around it for the droplets.',
+        avoid: 'Do not shoot at eye level. Do not show the cup standing straight or upright.' },
+      { t: 'Flavor set', k: 'cutout', r: '2:3 ×3', f: 'A-cup-[greens|roots|gold]', ref: 'A01', shot: 'Same low-angle worm\'s-eye product photo as the attached image.',
+        subject: 'The exact cup from the attached image, with only the juice changed to [bright green apple and celery / hot pink watermelon and strawberry / golden pineapple and mango]. The flying droplets match the new juice color.',
+        pose: 'Identical to the attached image: same jump, same tilt toward 1 o\'clock, same slosh and droplets.',
+        camera: 'Identical to the attached image: low camera below the cup pointing up about 30 degrees, 28mm lens.',
+        shows: 'Same as the attached image: the base underside is visible and the lid looks smaller.',
+        framing: 'Identical framing to the attached image.',
+        avoid: 'Do not change the cup, the straw, the angle or the composition. Change only the juice color.' },
+      { t: 'Orange sun', k: 'cutout', r: '1:1', f: 'A-orange-sun', shot: 'Straight-on macro photo of a halved orange, cut face to the lens.',
+        subject: 'Half of a ripe orange with a glistening, juicy cut face. The segments radiate from the center like sun rays.',
+        pose: 'The cut face points directly at the camera, perfectly flat to the lens. A few drops of juice hang in the air around the edge.',
+        camera: 'Camera at exactly the same height as the orange, pointing straight at the cut face (perpendicular to it). 100mm macro lens.',
+        shows: 'The cut face is a perfect circle. None of the outside peel is visible, apart from the thin rind ring.',
+        framing: 'Square 1:1. The orange is centered and fills about 80% of the frame.',
+        avoid: 'No tilt and no perspective. The page will spin this image, so it must be flat-on.' },
+      { t: 'Fruit pop', k: 'cutout', r: '3:2', f: 'A-fruit-pop', shot: 'Slightly low-angle photo of three fruits popping up into the air.',
+        subject: 'A watermelon wedge, a ripe strawberry and a pineapple ring.',
+        pose: 'All three are in mid-air, popping upward like popcorn and spaced well apart. The watermelon wedge\'s tip points up-left (toward 11 o\'clock). The strawberry\'s tip points down-right (toward 4 o\'clock). The pineapple ring is tilted so it appears as an oval. Juice drops flick off each one.',
+        camera: 'Camera slightly below the fruit, pointing up about 15 degrees. 50mm lens.',
+        shows: 'Parts of each fruit\'s underside are visible, which gives a sense of upward motion.',
+        framing: 'Horizontal 3:2. The three fruits are spread across the frame with clear gaps between them.',
+        avoid: 'No bowl, no table, and no fruit touching or overlapping another.' },
+      { t: 'Sunburst splash', k: 'cutout', r: '1:1', f: 'A-splash', shot: 'Head-on high-speed photo of a radial juice splash.',
+        subject: 'A splash of bright orange juice.',
+        pose: 'The juice bursts outward from the center in every direction, like the rays of a sun, with a round droplet at the tip of each ray. Frozen at 1/10,000 second.',
+        camera: 'Camera at eye level, pointing straight at the center of the splash. 85mm lens.',
+        shows: 'An even starburst shape, symmetrical enough to read as a sun.',
+        framing: 'Square 1:1. The splash is centered and its rays almost reach the edges.',
+        avoid: 'No container and no surface. The splash floats on its own.' },
+      { t: 'Sunset sky', k: 'scene', r: '16:9', f: 'A-sky', shot: 'Wide horizon-level photo of a sunset sky.',
+        subject: 'A cloudless sunset sky fading from tangerine orange at the bottom to hot pink at the top, with a huge, low, glowing sun.',
+        pose: 'The sun sits just above the bottom edge, centered horizontally.',
+        camera: 'Camera level with the horizon, pointing straight ahead. 85mm lens, so the sun looks big.',
+        shows: 'Only sky and sun.',
+        framing: 'Horizontal 16:9. The sun is bottom center and about a third of the frame height.',
+        bg: 'The sky itself fills the frame edge to edge.',
+        avoid: 'No ground, no buildings, no trees, no birds, no clouds.' },
+      { t: 'Juice stand', k: 'scene', r: '16:9', f: 'A-stand', shot: 'Straight-on, counter-height photo of a 1970s juice stand.',
+        subject: 'A sunny 1970s roadside juice stand with a scalloped orange-and-pink striped awning, wooden crates of oranges and watermelons on both sides, and a sunflower-yellow wall behind.',
+        pose: 'The middle of the counter is empty and clear, ready for a product to be placed there.',
+        camera: 'Camera at counter height, pointing straight at the counter. 35mm lens.',
+        shows: 'The counter top as a horizontal line about a third of the way up the frame, with the awning across the top.',
+        framing: 'Horizontal 16:9, symmetrical, with the empty counter centered.',
+        bg: 'The stand and its wall fill the frame.',
+        avoid: 'No signs or lettering, no price tags.' },
+      { t: 'Chrome press', k: 'cutout', r: '1:1', f: 'A-press', shot: 'Low-angle photo looking up at a citrus press as juice pours.',
+        subject: 'A vintage chrome lever citrus press crushing an orange half.',
+        pose: 'The lever is pulled down hard. A twisting stream of bright juice pours out of the spout.',
+        camera: 'Camera low, below the spout, pointing up about 25 degrees. 35mm lens.',
+        shows: 'The underside of the spout, with the juice stream falling toward the camera.',
+        framing: 'Square 1:1. The press fills 75% of the frame.',
+        avoid: 'Do not shoot it from the side at eye level.' }
+    ] },
+  { id: 'B', name: 'Amalfi Citrus', line: 'Mediterranean lemon groves on a seaside terrace: cobalt tiles, whitewash, hard sun and leaf shadows. A soft serif that swells on scroll. Fresh, bright and a little luxurious.',
+    pal: [['Cobalt', '#1748D6'], ['Lemon', '#FFE135'], ['Leaf', '#1FA34A'], ['Coral', '#FF6B4A'], ['Whitewash', '#FFFFFF']], fonts: 'Fraunces · Instrument Sans', a1: '#1748D6', a2: '#21A8E0',
+    light: 'Strong late-morning Mediterranean sun from the upper left, with cool blue-tinted shadows on the subject. Bright, airy and clean.',
+    style: 'Sun-drenched Mediterranean editorial photograph. Intensely saturated lemon yellow, cobalt blue and leaf green, crisp detail.',
+    p: [
+      { t: 'Hero bottle, tipping', k: 'cutout', r: '2:3', f: 'B-hero-bottle', shot: 'Low three-quarter angle photo of a juice bottle tipping toward the camera in mid-air.',
+        subject: 'A tall clear glass bottle of cloudy, bright yellow fresh lemon juice, with a blank kraft-paper label tied on with twine and a sprig of glossy lemon leaves at the neck. Condensation and droplets on the glass.',
+        pose: 'The bottle is in mid-air, tipping forward toward the camera. Its neck leans toward the lens and slightly left, toward 11 o\'clock. Droplets fly off the shoulder.',
+        camera: 'The camera is below the bottle and to its right, pointing up about 20 degrees (low three-quarter view). 35mm lens.',
+        shows: 'The bottom of the bottle and part of the base underside are visible. The neck is foreshortened as it comes toward the lens.',
+        framing: 'Vertical 2:3. The bottle fills about 75% of the frame height, centered.',
+        avoid: 'Do not show the bottle upright or in side profile. Do not shoot at eye level.' },
+      { t: 'Flavor set', k: 'cutout', r: '2:3 ×3', f: 'B-bottle-[orange|greens|ruby]', ref: 'B01', shot: 'Same low three-quarter angle photo as the attached image.',
+        subject: 'The exact bottle from the attached image. Change only the juice and the sprig at the neck to [deep orange blood orange with an orange-leaf sprig / vivid green cucumber, mint and celery with a mint sprig / ruby red pomegranate and beet with a pomegranate-leaf sprig].',
+        pose: 'Identical to the attached image: same tip toward the lens, same lean toward 11 o\'clock.',
+        camera: 'Identical to the attached image: low and to the right, pointing up about 20 degrees, 35mm lens.',
+        shows: 'Same as the attached image.',
+        framing: 'Identical framing to the attached image.',
+        avoid: 'Do not change the bottle, the label, the angle or the composition.' },
+      { t: 'Lemon branch', k: 'cutout', r: '3:2', f: 'B-branch', shot: 'Slightly low-angle photo of a lemon branch swinging through the air.',
+        subject: 'A short branch from an Amalfi lemon tree with two large, knobbly, bright yellow lemons and glossy dark green leaves.',
+        pose: 'The branch swings diagonally across the frame from lower left to upper right, its leaves fluttering and twisting so some show their pale undersides.',
+        camera: 'Camera slightly below the branch, pointing up about 20 degrees. 50mm lens.',
+        shows: 'The undersides of the lemons and some leaves, as if seen from beneath a tree.',
+        framing: 'Horizontal 3:2. The branch runs corner to corner.',
+        avoid: 'No tree trunk, no sky, no ground.' },
+      { t: 'Lemon split', k: 'cutout', r: '1:1', f: 'B-lemon-split', shot: 'Eye-level high-speed photo of a lemon splitting apart in mid-air.',
+        subject: 'A bright yellow lemon cut into two halves.',
+        pose: 'The halves drift apart in mid-air. The left half tilts toward 10 o\'clock and the right half toward 2 o\'clock, both cut faces turned toward the camera. Juice and three or four seeds spray from the gap between them.',
+        camera: 'Camera at eye level with the lemon, pointing straight at it. 85mm lens.',
+        shows: 'Both glistening cut faces, seen slightly at an angle as ovals.',
+        framing: 'Square 1:1, centered, with a clear gap between the halves.',
+        avoid: 'No knife and no board.' },
+      { t: 'Lemon slice, top-down', k: 'cutout', r: '1:1', f: 'B-lemon-slice', shot: 'Directly overhead flat-lay photo of one lemon slice.',
+        subject: 'A single round lemon slice with glistening translucent segments and a thin, bright rind.',
+        pose: 'The slice lies perfectly flat.',
+        camera: 'Camera directly above the slice, pointing straight down at 90 degrees. 100mm macro lens.',
+        shows: 'A perfect circle with no visible thickness or edge.',
+        framing: 'Square 1:1, centered, filling 80% of the frame.',
+        avoid: 'No perspective and no tilt. The page will spin this image.' },
+      { t: 'Splash with slice', k: 'cutout', r: '2:3', f: 'B-splash', shot: 'Low-angle high-speed photo of a tall lemon juice splash.',
+        subject: 'A tall vertical splash of pale yellow lemon juice with a lemon slice frozen inside it.',
+        pose: 'The splash rises like a column. The slice is tilted about 45 degrees so both its face and its edge show. Droplets sparkle in the sun.',
+        camera: 'Camera low at the base of the splash, pointing up about 20 degrees. 50mm lens.',
+        shows: 'The splash towers over the viewer.',
+        framing: 'Vertical 2:3. The splash fills 85% of the frame height.',
+        avoid: 'No glass and no container.' },
+      { t: 'Majolica wall', k: 'scene', r: '16:9', f: 'B-tiles', shot: 'Flat, straight-on photo of a tiled wall in hard sun.',
+        subject: 'A wall of hand-painted cobalt blue and white Mediterranean majolica tiles with lemon motifs.',
+        pose: 'Strong diagonal shadows of lemon leaves fall across the wall from the upper left.',
+        camera: 'Camera pointing straight at the wall, perpendicular to it. 50mm lens.',
+        shows: 'The tile grid is perfectly straight, with no perspective.',
+        framing: 'Horizontal 16:9. The tiles fill the frame edge to edge.',
+        bg: 'The wall fills the frame.',
+        avoid: 'No plants in frame, only their shadows.' },
+      { t: 'Seaside terrace', k: 'scene', r: '16:9', f: 'B-terrace', shot: 'Low-angle wide photo across a whitewashed terrace to the sea.',
+        subject: 'A whitewashed terrace high above a deep blue sea, with lemon trees in terracotta pots along a low wall, a cobalt sky and harsh midday sun.',
+        pose: 'The low wall in the foreground is empty, left clear for a product.',
+        camera: 'Camera at the height of the wall\'s top, pointing straight ahead with a slight upward tilt. 35mm lens.',
+        shows: 'The top of the wall as a strong line across the lower third, with sea and sky beyond.',
+        framing: 'Horizontal 16:9, with the clear spot on the wall centered.',
+        bg: 'The terrace, sea and sky fill the frame.',
+        avoid: 'No boats with text, no buildings with signs.' }
+    ] },
+  { id: 'C', name: 'Candy Gloss', line: 'A glossy pop studio on a white canvas. The cups are your existing Sunburst cup photos (same products). These prompts are the candy-only accents: lacquered fruit, juice blobs, bubbles, a drip and a ribbon, which drive the Candy transitions.',
+    pal: [['Watermelon', '#FF3D6E'], ['Orange pop', '#FF7A00'], ['Lime', '#B6F500'], ['Sunshine', '#FFD60A'], ['Bubblegum', '#FF8FD8']], fonts: 'Bricolage Grotesque · Manrope', a1: '#FF3D6E', a2: '#FF7A00',
+    light: 'Bright, clean studio flash with soft wraparound fill and crisp specular highlights that make every surface look wet and lacquered, as if glazed in clear candy.',
+    style: 'Hyper-saturated glossy pop studio photograph, candy-like shine, razor-sharp detail.',
+    p: [
+      { t: 'Glossy fruit set', k: 'cutout', r: '3:2', f: 'C-fruit-set', shot: 'Eye-level studio photo of four glossy fruit pieces floating far apart.',
+        subject: 'A strawberry, a lime wheel, a pair of cherries on one stem, and an orange segment, each ultra-glossy as if lacquered with clear candy glaze.',
+        pose: 'They float in mid-air with wide gaps between them, left to right in this order: strawberry with its tip pointing to 7 o\'clock; lime wheel tilted so it appears as an oval; cherries hanging from a stem angled toward 2 o\'clock; orange segment curved like a smile.',
+        camera: 'Camera at eye level with the fruit, pointing straight at them. 85mm lens.',
+        shows: 'Bright specular highlights on every piece and the glaze catching the light.',
+        framing: 'Horizontal 3:2. The four pieces are spread in a row across the frame and none of them touch.',
+        avoid: 'No pieces touching or overlapping. No bowl, no surface.' },
+      { t: 'Juice blob, orange', k: 'cutout', r: '1:1', f: 'C-blob-orange', shot: 'Eye-level macro photo of a floating blob of orange juice.',
+        subject: 'A smooth, glossy blob of bright orange juice in zero gravity.',
+        pose: 'The blob wobbles into a soft, rounded, organic shape, like a water balloon mid-wobble. Three small spheres break away from its upper right edge. Light refracts through it.',
+        camera: 'Camera at eye level, pointing straight at the blob. 100mm macro lens.',
+        shows: 'Translucent glowing edges, a bright highlight on the upper left, and the color deepening toward the center.',
+        framing: 'Square 1:1. The blob is centered and fills 70% of the frame.',
+        avoid: 'No container, no surface, no splash.' },
+      { t: 'Juice blob set', k: 'cutout', r: '1:1 ×3', f: 'C-blob-[lime|pink|yellow]', ref: 'C02', shot: 'Same eye-level macro photo as the attached image.',
+        subject: 'The exact blob from the attached image, with only the liquid changed to [vivid lime green juice / hot watermelon pink juice / sunshine yellow pineapple juice].',
+        pose: 'Identical to the attached image: same wobble shape and the same three small spheres breaking away.',
+        camera: 'Identical to the attached image: eye level, 100mm macro.',
+        shows: 'Same as the attached image.',
+        framing: 'Identical framing to the attached image.',
+        avoid: 'Do not change the shape, size or position. Change only the color.' },
+      { t: 'Juice bubbles', k: 'cutout', r: '3:2', f: 'C-bubbles', shot: 'Eye-level macro photo of floating glossy spheres of juice.',
+        subject: 'Twelve perfect, glossy spheres of juice in four colors (orange, lime green, watermelon pink, sunshine yellow), from marble-sized to plum-sized.',
+        pose: 'They float in zero gravity, spread out at different distances from the camera. The closest two are large and slightly out of focus, the rest are sharp.',
+        camera: 'Camera at eye level, pointing straight ahead. 85mm lens.',
+        shows: 'Each sphere has a bright window-shaped highlight on its upper left and glows where light passes through.',
+        framing: 'Horizontal 3:2, with the spheres scattered across the frame and gaps between all of them.',
+        avoid: 'No spheres touching or overlapping. No splashes.' },
+      { t: 'Juice drip', k: 'cutout', r: '16:9', f: 'C-drip', shot: 'Straight-on studio photo of thick juice dripping down from the top edge.',
+        subject: 'A thick, glossy layer of watermelon-pink juice coating the entire top edge of the frame.',
+        pose: 'The juice runs down in seven long drips of different lengths. Some reach a third of the way down, one reaches halfway, and each ends in a round bead about to fall.',
+        camera: 'Camera at eye level, pointing straight at the drips. 50mm lens.',
+        shows: 'The drips as smooth, glossy, rounded columns with highlights running down them.',
+        framing: 'Horizontal 16:9. The juice touches the top edge from the far left to the far right. The bottom half of the frame is empty white.',
+        avoid: 'No container, no surface, no splashes.' },
+      { t: 'Juice ribbon', k: 'cutout', r: '3:2', f: 'C-ribbon', shot: 'Eye-level high-speed photo of a ribbon of juice arcing through the air.',
+        subject: 'A thick, glossy ribbon of hot pink watermelon juice.',
+        pose: 'The ribbon arcs through the air in a smooth S-curve from the lower left to the upper right, twisting once in the middle, and its end breaks into round droplets.',
+        camera: 'Camera at eye level, slightly below the arc. 50mm lens.',
+        shows: 'The full length of the ribbon, its rounded thickness, and the twist catching a highlight.',
+        framing: 'Horizontal 3:2. The ribbon spans the full width.',
+        avoid: 'No pouring vessel in frame.' },
+      { t: 'Squeeze moment', k: 'cutout', r: '1:1', f: 'C-squeeze', shot: 'Eye-level surreal studio photo of an orange turning into a sphere of juice.',
+        subject: 'A whole glossy orange.',
+        pose: 'The orange is squeezed by an invisible force. Its peel splits open into petals while the inside becomes a perfect floating sphere of juice, frozen halfway through the change.',
+        camera: 'Camera at eye level, pointing straight at it. 85mm lens.',
+        shows: 'The peel petals curling back and the glossy juice sphere rising out of them.',
+        framing: 'Square 1:1, centered.',
+        avoid: 'No hands and no machinery.' },
+      { t: 'Lime wheel, top-down', k: 'cutout', r: '1:1', f: 'C-lime-wheel', shot: 'Directly overhead flat-lay photo of one glossy lime wheel.',
+        subject: 'A single round lime wheel with glistening, juicy green segments and a bright rind, glazed and glossy.',
+        pose: 'The wheel lies perfectly flat.',
+        camera: 'Camera directly above, pointing straight down at 90 degrees. 100mm macro lens.',
+        shows: 'A perfect circle with no visible thickness.',
+        framing: 'Square 1:1, centered, filling 80% of the frame.',
+        avoid: 'No perspective and no tilt. The page will spin this image.' }
+    ] },
+  { id: 'D', name: 'Daylight Jungle', line: 'A bright tropical garden on a white canvas: layered monstera parallax, and fruit that glows hot pink and mango. A wide display face. Lush and maximal, but airy.',
+    pal: [['Leaf', '#1F8A5B'], ['Mango', '#FFB000'], ['Dragonfruit', '#FF2D87'], ['Lime', '#9EF01A'], ['Papaya', '#FF6B2C']], fonts: 'Unbounded · Outfit', a1: '#1F8A5B', a2: '#FF2D87',
+    light: 'Bright, humid tropical daylight from the upper left, crisp but soft-edged shading, sparkling highlights on wet surfaces. The fruit colors glow intensely.',
+    style: 'Lush, fresh tropical photograph. Dewy, wet surfaces, vivid greens and fruit colors, sharp detail.',
+    p: [
+      { t: 'Hero glass, splashing', k: 'cutout', r: '2:3', f: 'D-hero-glass', shot: 'Low-angle photo looking up at a tall glass of juice tilting in mid-air.',
+        subject: 'A tall glass of golden mango and passionfruit juice with ice cubes, half a passionfruit perched on the rim and a small monstera leaf tucked behind the glass.',
+        pose: 'The glass is in mid-air, tilted so its top leans to the right, toward 1 o\'clock (about 15 degrees). Juice splashes over the right side of the rim in an arc.',
+        camera: 'The camera is below the rim, pointing up about 25 degrees. 35mm lens.',
+        shows: 'The underside of the glass base is visible and the rim tilts away from the viewer. The splash arcs over the top.',
+        framing: 'Vertical 2:3. The glass fills about 70% of the frame height, with room above for the splash.',
+        avoid: 'Do not show the glass upright. Do not shoot at eye level.' },
+      { t: 'Flavor set', k: 'cutout', r: '2:3 ×3', f: 'D-glass-[kiwi|dragon|pine]', ref: 'D01', shot: 'Same low-angle photo as the attached image.',
+        subject: 'The exact glass from the attached image. Change the juice and the rim garnish together to [bright green kiwi and lime with a lime wheel / hot pink dragonfruit with a dragonfruit wedge / golden pineapple and ginger with a pineapple leaf].',
+        pose: 'Identical to the attached image: same tilt toward 1 o\'clock, same splash.',
+        camera: 'Identical to the attached image: below the rim, pointing up about 25 degrees, 35mm lens.',
+        shows: 'Same as the attached image.',
+        framing: 'Identical framing to the attached image.',
+        avoid: 'Do not change the glass, the ice, the angle or the composition.' },
+      { t: 'Leaf layers', k: 'cutout', r: '3:2', f: 'D-leaves', shot: 'Eye-level photo of three tropical leaves at very different depths.',
+        subject: 'Three large, glossy tropical leaves (two monstera, one banana leaf), dewy with water drops.',
+        pose: 'One leaf is close to the lens and huge, tilted toward the camera so it is strongly foreshortened. One is at mid-distance, seen at a steep angle. One is small and far away, almost edge-on.',
+        camera: 'Camera at eye level. 35mm lens.',
+        shows: 'A strong sense of depth from the size difference between the leaves.',
+        framing: 'Horizontal 3:2. The leaves are spread out and not overlapping, so each can be cut out on its own.',
+        avoid: 'No stems joining them and no plant pot.' },
+      { t: 'Tropical burst', k: 'cutout', r: '1:1', f: 'D-burst', shot: 'Eye-level high-speed photo of tropical fruit bursting outward.',
+        subject: 'Half a mango, a halved passionfruit, a dragonfruit wedge and three lychees.',
+        pose: 'The fruit bursts outward from a central point in mid-air, each piece flying in a different direction and tilted at its own angle, with juice spraying between them.',
+        camera: 'Camera at eye level, pointing at the center of the burst. 50mm lens.',
+        shows: 'A radial explosion, with the closest piece biggest.',
+        framing: 'Square 1:1, centered.',
+        avoid: 'No pieces overlapping.' },
+      { t: 'Dragonfruit, top-down', k: 'cutout', r: '1:1', f: 'D-dragon-slice', shot: 'Directly overhead flat-lay photo of one dragonfruit slice.',
+        subject: 'A single round slice of red dragonfruit: vivid magenta flesh with tiny black seeds and a pink rim.',
+        pose: 'The slice lies perfectly flat.',
+        camera: 'Camera directly above, pointing straight down at 90 degrees. 100mm macro lens.',
+        shows: 'A perfect circle with no visible thickness.',
+        framing: 'Square 1:1, centered, filling 80% of the frame.',
+        avoid: 'No perspective and no tilt. The page will spin this image.' },
+      { t: 'Mango splash', k: 'cutout', r: '1:1', f: 'D-splash', shot: 'Low-angle high-speed photo of a mango juice splash.',
+        subject: 'A thick splash of golden mango juice wrapping around half a passionfruit.',
+        pose: 'The juice curls up and around the fruit, and droplets fly off its edges catching the light.',
+        camera: 'Camera low, near the base of the splash, pointing up about 15 degrees. 50mm lens.',
+        shows: 'The splash curling over the top of the fruit.',
+        framing: 'Square 1:1, centered.',
+        avoid: 'No container.' },
+      { t: 'Greenhouse frame', k: 'scene', r: '16:9', f: 'D-greenhouse', shot: 'Eye-level photo of tropical plants framing an empty white space.',
+        subject: 'Lush tropical plants (monstera, banana leaves and palms) in vivid greens growing in from the edges of a bright, white-walled greenhouse, with a few ripe fruits hanging among them.',
+        pose: 'The foliage frames an empty, bright white space in the center, left clear for a product.',
+        camera: 'Camera at eye level, pointing straight into the foliage. 35mm lens.',
+        shows: 'Layers of leaves at different depths around the edges of the frame.',
+        framing: 'Horizontal 16:9, with the empty white space centered and taking up about half the frame.',
+        bg: 'A clean white wall behind the plants.',
+        avoid: 'No animals and no paths.' },
+      { t: 'Plunge', k: 'cutout', r: '1:1', f: 'D-plunge', shot: 'Liquid-level side photo of fruit plunging into juice.',
+        subject: 'A mango, a passionfruit and a lime.',
+        pose: 'The fruit plunges into a pool of golden juice from above, throwing up a tall crown splash.',
+        camera: 'Camera at the surface level of the juice, pointing straight across it. 50mm lens.',
+        shows: 'The crown splash towering over the surface line, with fruit half-submerged.',
+        framing: 'Square 1:1. The surface line sits about a third of the way up.',
+        avoid: 'No glass walls visible.' }
+    ] }
+];
+
+const tabs = document.getElementById('tabs'), panel = document.getElementById('panel'), toast = document.getElementById('toast');
+let tt;
+const say = m => { toast.textContent = m; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1600); };
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const fieldsOf = (d, p) => [
+  ['SHOT', p.shot],
+  ['SUBJECT', p.subject],
+  ['POSE', p.pose],
+  ['CAMERA', p.camera],
+  ['WHAT THE ANGLE SHOWS', p.shows],
+  ['FRAMING', p.framing + ' Aspect ratio ' + p.r.split(' ')[0] + '.'],
+  ['LIGHTING', d.light],
+  ['BACKGROUND', p.k === 'cutout' ? BG_CUTOUT : (p.bg || 'Full-frame scene, edge to edge.')],
+  ['STYLE', d.style + ' Photorealistic.'],
+  ['AVOID', p.avoid + ' ' + AVOID_BASE]
+];
+const full = (d, p) => (p.ref ? 'Use the attached image as the reference.\n' : '') + fieldsOf(d, p).map(f => f[0] + ': ' + f[1]).join('\n');
+function copy(text, label) {
+  try { navigator.clipboard.writeText(text).then(() => say('Copied ' + label), () => fallback(text)); } catch (e) { fallback(text); }
+}
+function fallback(text) { const ta = document.getElementById('hiddenCopy'); ta.value = text; ta.focus(); ta.select(); say('Clipboard blocked. Press Ctrl+C to copy'); }
+
+function render(i) {
+  const d = D[i];
+  document.documentElement.style.setProperty('--a1', d.a1);
+  document.documentElement.style.setProperty('--a2', d.a2);
+  [...tabs.children].forEach((t, k) => t.setAttribute('aria-selected', String(k === i)));
+  panel.innerHTML = `
+    <section class="dir">
+      <div><span class="label" style="color:rgba(255,255,255,.85)">Direction ${d.id}</span><h2>${d.name}</h2><p>${d.line}</p></div>
+      <div class="meta"><div class="sw">${d.pal.map(c => `<span><i style="background:${c[1]}"></i>${c[0]} ${c[1]}</span>`).join('')}</div><div>Type: ${d.fonts}</div></div>
+    </section>
+    <div class="block">
+      <div class="block-head"><span class="label">Shared by every prompt in ${d.id}</span><button class="btn ghost" type="button" id="copyAll">Copy all ${d.p.length} prompts</button></div>
+      <dl><dt class="label">Lighting</dt><dd>${esc(d.light)}</dd><dt class="label">Style</dt><dd>${esc(d.style)}</dd></dl>
+    </div>
+    <div class="grid">${d.p.map((p, k) => `
+      <article class="pr">
+        <div class="pr-top"></div>
+        <div class="pr-head"><div class="row"><span class="chip">${d.id}${String(k + 1).padStart(2, '0')}</span><span class="chip ${p.k === 'scene' ? 'scene' : ''}">${p.k === 'scene' ? 'Scene' : 'Cutout'}</span><span class="chip">${p.r}</span>${p.ref ? `<span class="chip ref">Attach ${p.ref}</span>` : ''}</div><h3>${p.t}</h3></div>
+        <dl class="fields">
+          <dt>Shot</dt><dd>${esc(p.shot)}</dd>
+          <dt>Subject</dt><dd>${esc(p.subject)}</dd>
+          <dt>Pose</dt><dd>${esc(p.pose)}</dd>
+          <dt class="cam">Camera</dt><dd>${esc(p.camera)}</dd>
+          <dt>Shows</dt><dd>${esc(p.shows)}</dd>
+          <dt>Framing</dt><dd>${esc(p.framing)}</dd>
+          ${p.bg ? `<dt>Backdrop</dt><dd>${esc(p.bg)}</dd>` : ''}
+          <dt>Avoid</dt><dd>${esc(p.avoid)}</dd>
+        </dl>
+        <div class="pr-foot"><code>${p.f}.png</code><button class="btn" type="button" data-k="${k}">Copy prompt</button></div>
+      </article>`).join('')}</div>`;
+  panel.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => {
+    const k = +b.dataset.k; copy(full(d, d.p[k]), d.id + String(k + 1).padStart(2, '0'));
+  }));
+  document.getElementById('copyAll').addEventListener('click', () => {
+    copy(d.p.map((p, k) => `=== ${d.id}${String(k + 1).padStart(2, '0')} · ${p.t} · ${p.k} · ${p.r} · save as ${p.f}.png ===\n${full(d, p)}`).join('\n\n'), 'all ' + d.id + ' prompts');
+  });
+  try { localStorage.setItem('rr-tab', String(i)); } catch (e) {}
+}
+D.forEach((d, i) => {
+  const b = document.createElement('button');
+  b.className = 'tab'; b.type = 'button'; b.setAttribute('role', 'tab');
+  b.innerHTML = `<span class="dots">${d.pal.slice(0, 3).map(c => `<i style="background:${c[1]}"></i>`).join('')}</span>${d.id} · ${d.name}`;
+  b.addEventListener('click', () => render(i));
+  tabs.appendChild(b);
+});
+let start = 0;
+try { start = +(localStorage.getItem('rr-tab') || 0) || 0; } catch (e) {}
+render(Math.min(3, Math.max(0, start)));
+</script>
+</body>
+</html>

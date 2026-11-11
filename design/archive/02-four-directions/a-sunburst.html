@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RUSSRUSS · Sunburst Stand</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2730%27 fill=%27%23FF6A13%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2722%27 fill=%27%23FFC300%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Rubik:wght@300..900&display=swap">
+<link rel="stylesheet" href="common.css">
+<script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim'); setTimeout(function () { if (!window.gsap) document.documentElement.classList.remove('anim'); }, 4000);</script>
+<style>
+/* Layout: sunset stage, sun-and-rays behind the cup, stacked 70s wave bands; sections swap flat flavor colors. */
+:root {
+  --sun: #FFC300; --tang: #FF6A13; --pink: #FF2E7E; --lime: #7ED321; --sky: #2EC4F1;
+  --cream: #FFF4D6; --cocoa: #3B1E08;
+  --bg: var(--sun); --fg: var(--cocoa); --accent: var(--pink); --on-accent: #FFFFFF;
+  --display: "Shrikhand", "Cooper Black", Georgia, serif;
+  --body: "Rubik", system-ui, sans-serif;
+  color-scheme: light;
+}
+.retro { color: var(--cream); text-shadow: 3px 3px 0 var(--pink), 6px 6px 0 var(--tang), 9px 9px 0 var(--cocoa); }
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; background: var(--cream); color: var(--cocoa); font: 700 .78rem/1 var(--body); letter-spacing: .02em; white-space: nowrap; }
+.pill.hot { background: var(--pink); color: #fff; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 17px 26px; border-radius: 999px; border: 0; background: var(--pink); color: #fff; font: 800 1rem/1 var(--body); text-decoration: none; cursor: pointer; box-shadow: 0 10px 0 -2px var(--cocoa); transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s; }
+.btn:hover { transform: translateY(-3px) rotate(-1.5deg); box-shadow: 0 13px 0 -2px var(--cocoa); }
+.btn:active { transform: translateY(6px); box-shadow: 0 2px 0 -2px var(--cocoa); }
+.btn.sm { padding: 10px 16px; font-size: .82rem; box-shadow: 0 6px 0 -2px var(--cocoa); }
+.rays { background: repeating-conic-gradient(from 0deg, rgba(255,244,214,.38) 0deg 9deg, transparent 9deg 18deg); border-radius: 50%; }
+.spin-slow { animation: spin 60s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* loader */
+.loader { --loader-bg: var(--sun); overflow: hidden; }
+.loader .lrays { position: absolute; width: 160vmax; height: 160vmax; left: 50%; top: 50%; margin: -80vmax 0 0 -80vmax; }
+.loader svg, .loader-row { position: relative; }
+.loader-row { color: var(--cocoa); }
+.wm-text { font: 400 150px var(--display); }
+
+/* hero */
+.hero-bg .sky { position: absolute; inset: 0; background: linear-gradient(to top, var(--tang) 0%, #FF4A4A 45%, var(--pink) 100%); }
+.hero-bg .rays { position: absolute; width: 170vmax; height: 170vmax; left: 50%; top: 58%; margin: -85vmax 0 0 -85vmax; }
+.hero-bg .sun { position: absolute; width: min(64vh, 70vw); aspect-ratio: 1; left: 50%; top: 56%; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 40% 35%, #FFE27A, var(--sun) 60%); box-shadow: 0 0 0 18px rgba(255,195,0,.35), 0 0 0 40px rgba(255,195,0,.18); }
+.nav { color: var(--cream); }
+.logo { font: 400 1.7rem/1 var(--display); color: var(--cream); text-decoration: none; text-shadow: 2px 2px 0 var(--cocoa); }
+.nav ul { font: 700 .9rem/1 var(--body); }
+.hl { font: 400 clamp(3rem, 10.5vw, 10.5rem)/.9 var(--display); letter-spacing: -.01em; }
+.hl-1 { top: 13%; left: 4vw; transform: rotate(-6deg); }
+.hl-2 { bottom: 25%; right: 4vw; transform: rotate(-6deg); }
+.waves { position: absolute; left: 0; bottom: 0; width: 100%; height: clamp(70px, 14vh, 140px); z-index: 8; }
+.hero-ui .meta { display: flex; flex-wrap: wrap; gap: 8px; max-width: 44%; }
+.cue { font: 700 .82rem/1 var(--body); color: var(--cocoa); display: flex; gap: 8px; align-items: center; }
+#cupIn { filter: drop-shadow(0 26px 30px rgba(59,30,8,.35)); }
+.g > svg { filter: drop-shadow(0 14px 16px rgba(59,30,8,.28)); }
+#wipe { background: var(--sun); display: grid; place-items: center; overflow: hidden; }
+#wipe .rays { position: absolute; width: 170vmax; height: 170vmax; left: 50%; top: 55%; margin: -85vmax 0 0 -85vmax; }
+#wipe p { position: relative; font: 400 clamp(3rem, 9vw, 9rem)/.9 var(--display); text-align: center; }
+@media (max-width: 700px) { .hl { font-size: clamp(2.8rem, 15vw, 5rem); } .hl-2 { bottom: 34%; } .hero-ui .meta { max-width: none; } }
+
+/* reel */
+.reel { color: var(--cocoa); }
+.reel-word { font: 400 clamp(8rem, 30vw, 32rem)/1 var(--display); color: rgba(255,244,214,.55); }
+.reel-head h2 { font: 400 clamp(2.6rem, 6.5vw, 6.5rem)/.9 var(--display); }
+.card { background: var(--cream); border-radius: 34px; box-shadow: 0 30px 40px -18px rgba(59,30,8,.45); }
+.stage { margin: 12px 12px 0; border-radius: 24px; background: var(--fc); }
+.stage .rays { position: absolute; width: 520px; height: 520px; left: 50%; top: 100%; margin: -260px 0 0 -260px; }
+.stage .disc { position: absolute; width: 220px; height: 220px; left: 50%; bottom: -96px; margin-left: -110px; border-radius: 50%; background: rgba(255,244,214,.55); }
+.prod { filter: drop-shadow(0 16px 16px rgba(59,30,8,.3)); }
+.garn { filter: drop-shadow(0 8px 8px rgba(59,30,8,.25)); }
+.card-body { padding: 16px 20px 0; display: grid; gap: 8px; }
+.card h3 { font: 400 1.85rem/1 var(--display); }
+.card p { font-size: .92rem; color: #6B4A2F; }
+.stats { display: flex; flex-wrap: wrap; gap: 6px; }
+.stats span { font: 700 .72rem/1 var(--body); padding: 6px 10px; border-radius: 999px; background: #FFE7A8; }
+.card-foot { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px 20px; }
+.price { font: 800 1.3rem/1 var(--body); }
+.progress { background: rgba(255,244,214,.6); }
+.progress span { background: var(--cocoa); }
+
+/* manifesto */
+.mani { background: var(--sky); }
+.mani-left { background: var(--tang); }
+.mani-left .rays { position: absolute; width: 200%; aspect-ratio: 1; left: -50%; top: 50%; margin-top: -100%; }
+.figs, #figCap { position: relative; }
+.fig > svg { filter: drop-shadow(0 22px 22px rgba(59,30,8,.35)); }
+#figCap { font: 700 .82rem/1.3 var(--body); color: var(--cream); text-align: center; }
+.steps li { font: 800 .74rem/1 var(--body); padding: 7px 11px; border-radius: 999px; background: rgba(255,244,214,.6); transition: background-color .3s, color .3s; }
+.steps li.on { background: var(--cocoa); color: var(--cream); }
+.n { font: 400 clamp(5rem, 13vw, 13rem)/.85 var(--display); --fill-c: var(--pink); --empty-c: rgba(59,30,8,.16); padding-right: .1em; }
+.mc-num span:last-child { font: 800 1rem/1.2 var(--body); max-width: 14ch; }
+.mc-text { font: 400 clamp(2rem, 4.2vw, 4.4rem)/.95 var(--body); letter-spacing: -.02em; text-transform: uppercase; }
+@media (max-width: 760px) { .mani-left .rays { width: 260%; left: -80%; } }
+
+/* outro */
+.outro { background: linear-gradient(to top, var(--tang), var(--pink)); color: var(--cream); }
+.outro-row p { font: 400 clamp(2rem, 4.5vw, 4rem)/1 var(--display); }
+.outro .float { position: absolute; z-index: 1; filter: drop-shadow(0 16px 18px rgba(59,30,8,.3)); }
+.outro .note { font: 700 .86rem/1.3 var(--body); }
+
+/* ---- white canvas: color lives in the sun, the waves, the cards and the type ---- */
+:root { --bg: #FFFFFF; }
+.retro { color: var(--pink); text-shadow: 3px 3px 0 var(--tang), 6px 6px 0 var(--sun); }
+.hl-2.retro { color: var(--tang); text-shadow: 3px 3px 0 var(--pink), 6px 6px 0 var(--sun); }
+.pill { background: #FFF1DC; }
+.pill.hot { background: var(--pink); color: #FFFFFF; }
+.rays { background: repeating-conic-gradient(from 0deg, var(--ray, rgba(255,160,0,.08)) 0deg 9deg, transparent 9deg 18deg); }
+.stage .rays { --ray: rgba(255,244,214,.4); }
+.loader { --loader-bg: #FFFFFF; }
+.hero, .hero-bg .sky, #wipe, .reel, .mani, .mani-left, .outro { background: #FFFFFF; }
+.nav, .outro { color: var(--cocoa); }
+.logo { color: var(--pink); text-shadow: 2px 2px 0 var(--sun); }
+.reel-word { color: var(--tint, var(--sun)); opacity: .24; }
+.card { background: #FFF8EC; box-shadow: 0 30px 40px -22px rgba(59,30,8,.35); }
+.progress { background: #FFEFD2; }
+.progress span { background: var(--tint, var(--cocoa)); }
+.mani-left::before { content: ""; position: absolute; width: 72%; aspect-ratio: 1; left: 14%; top: 50%; transform: translateY(-50%); border-radius: 50%; background: radial-gradient(circle at 40% 35%, #FFE27A, var(--sun) 62%); box-shadow: 0 0 0 22px rgba(255,195,0,.18); }
+#figCap { color: var(--cocoa); }
+.steps li { background: #FFF1DC; }
+.n { --empty-c: #FFEBC8; }
+
+/* ---- photo assets ---- */
+.hero-bg .sun { background: url(assets/sunset.webp) 50% 78% / cover; box-shadow: 0 0 0 18px rgba(255,195,0,.28), 0 0 0 42px rgba(255,195,0,.14); }
+#splash { opacity: .9; }
+.prod, .fig > img, .trio img { object-fit: contain; }
+.trio { position: relative; width: 100%; height: 100%; }
+.trio img { position: absolute; height: auto; filter: drop-shadow(0 18px 18px rgba(59,30,8,.3)); }
+.fig > img { filter: drop-shadow(0 22px 22px rgba(59,30,8,.3)); }
+.g > img { filter: drop-shadow(0 18px 18px rgba(59,30,8,.22)); }
+.postcard { position: relative; z-index: 2; margin: 44px auto 0; max-width: 980px; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 50px -26px rgba(59,30,8,.5); }
+.postcard img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; }
+.postcard figcaption { position: absolute; left: 18px; bottom: 18px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="straw" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="14" height="14" fill="#FFFFFF" /><rect width="7" height="14" fill="#FF2E7E" /></pattern>
+    <path id="dropP" d="M0 -9 C3 -4 6 -1 6 3 A6 6 0 0 1 -6 3 C-6 -1 -3 -4 0 -9 Z" />
+  </defs>
+  <symbol id="cup" viewBox="0 0 200 300">
+    <path d="M44 112 L156 112 L142 280 Q141 286 134 286 L66 286 Q59 286 58 280 Z" style="fill: var(--juice, #FF6A13)" />
+    <path d="M44 112 Q72 102 100 112 T156 112 L155 128 Q128 118 100 128 T45 128 Z" style="fill: var(--foam, #FFC300)" />
+    <path d="M118 112 L156 112 L142 280 Q141 286 134 286 L118 286 Z" fill="#3B1E08" opacity=".12" />
+    <path d="M118 4 L131 6 L108 210 L95 208 Z" fill="url(#straw)" />
+    <path d="M58 104 L70 104 L78 270 L71 270 Z" fill="#FFFFFF" opacity=".55" />
+    <g fill="#FFFFFF" opacity=".9"><use href="#dropP" transform="translate(130 150)" /><use href="#dropP" transform="translate(86 162) scale(.8)" /><use href="#dropP" transform="translate(138 238) scale(.7)" /><use href="#dropP" transform="translate(90 256) scale(.9)" /></g>
+    <path d="M40 92 L160 92 L144 282 Q143 292 134 292 L66 292 Q57 292 56 282 Z" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" opacity=".9" />
+    <g transform="rotate(-5 100 196)"><rect x="50" y="176" width="100" height="40" rx="20" fill="#FFF4D6" /><text x="100" y="203" text-anchor="middle" font-family="Shrikhand, Georgia, serif" font-size="16" fill="#3B1E08">RussRuss</text></g>
+    <rect x="32" y="84" width="136" height="13" rx="6.5" fill="#FFF4D6" />
+    <path d="M42 86 C46 36 154 36 158 86 Z" fill="#FFFFFF" fill-opacity=".45" stroke="#FFFFFF" stroke-width="3" />
+  </symbol>
+  <symbol id="orange" viewBox="-52 -52 104 104">
+    <circle r="50" fill="#FF6A13" /><circle r="43" fill="#FFF4D6" /><circle r="39" fill="#FFC300" />
+    <g fill="#FF8C1A"><path d="M0 0 L36 -8 A37 37 0 0 1 32 18 Z" /><path d="M0 0 L18 32 A37 37 0 0 1 -12 35 Z" /><path d="M0 0 L-30 22 A37 37 0 0 1 -36 -8 Z" /><path d="M0 0 L-22 -30 A37 37 0 0 1 8 -37 Z" /></g>
+    <circle r="5" fill="#FFF4D6" /><path d="M-30 -30 A42 42 0 0 1 10 -42" stroke="#FFFFFF" stroke-width="5" fill="none" stroke-linecap="round" opacity=".6" />
+  </symbol>
+  <symbol id="berry" viewBox="-40 -48 80 96">
+    <path d="M0 44 C-34 20 -38 -18 -18 -30 C-8 -36 8 -36 18 -30 C38 -18 34 20 0 44 Z" fill="#FF2E5E" />
+    <g fill="#FFC300"><ellipse cx="-14" cy="-10" rx="2" ry="3" /><ellipse cx="6" cy="-14" rx="2" ry="3" /><ellipse cx="18" cy="2" rx="2" ry="3" /><ellipse cx="-4" cy="6" rx="2" ry="3" /><ellipse cx="-18" cy="12" rx="2" ry="3" /><ellipse cx="8" cy="22" rx="2" ry="3" /></g>
+    <path d="M0 -30 L-16 -44 L-4 -36 L0 -48 L4 -36 L16 -44 Z" fill="#7ED321" /><path d="M-22 -16 Q-20 -26 -10 -28" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round" opacity=".5" />
+  </symbol>
+  <symbol id="melon" viewBox="-60 -40 120 80">
+    <path d="M-56 -30 A56 56 0 0 0 56 -30 Z" fill="#7ED321" /><path d="M-48 -30 A48 48 0 0 0 48 -30 Z" fill="#FFF4D6" /><path d="M-43 -30 A43 43 0 0 0 43 -30 Z" fill="#FF2E7E" />
+    <g fill="#3B1E08"><ellipse cx="-20" cy="-14" rx="2.5" ry="4" /><ellipse cx="0" cy="-6" rx="2.5" ry="4" /><ellipse cx="20" cy="-14" rx="2.5" ry="4" /><ellipse cx="-8" cy="-20" rx="2.5" ry="4" /><ellipse cx="10" cy="-22" rx="2.5" ry="4" /></g>
+  </symbol>
+  <symbol id="pine" viewBox="-52 -52 104 104">
+    <circle r="50" fill="#FFC300" /><circle r="42" fill="#FFD84D" /><circle r="13" fill="#FFF4D6" />
+    <g stroke="#F5A800" stroke-width="3" stroke-linecap="round"><path d="M0 -38 V-20 M0 38 V20 M-38 0 H-20 M38 0 H20 M-27 -27 L-14 -14 M27 27 L14 14 M-27 27 L-14 14 M27 -27 L14 -14" /></g>
+  </symbol>
+  <symbol id="leaf" viewBox="-30 -50 60 100"><path d="M0 46 C-32 16 -26 -26 0 -46 C26 -26 32 16 0 46 Z" fill="#7ED321" /><path d="M0 42 V-38" stroke="#FFF4D6" stroke-width="3" stroke-linecap="round" opacity=".7" /></symbol>
+  <symbol id="drop" viewBox="-8 -11 16 19"><use href="#dropP" fill="#FFF4D6" /></symbol>
+</svg>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="lrays rays" id="loaderSpin"></div>
+  <svg viewBox="0 0 1000 240">
+    <defs><clipPath id="lclip"><text x="500" y="180" text-anchor="middle" class="wm-text">RussRuss</text></clipPath></defs>
+    <text x="500" y="180" text-anchor="middle" class="wm-text" fill="#FFE6BF">RussRuss</text>
+    <g clip-path="url(#lclip)"><g id="loaderFill" transform="translate(0 250)"><g data-loop-x><path data-wave="2600,560,14,14,250" fill="#FF2E7E" /></g></g></g>
+  </svg>
+  <div class="loader-row"><span>Squeezing <span id="loaderCount">000</span>%</span><span>Fresh at sunrise</span></div>
+</div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+<nav class="switch" aria-label="Variants">
+  <a href="a-sunburst.html" aria-current="page">A · Sunburst</a><a href="b-amalfi.html">B · Amalfi</a><a href="c-candy.html">C · Candy</a><a href="d-jungle.html">D · Jungle</a><button type="button" id="replayBtn">Replay</button>
+</nav>
+
+<section class="hero" id="hero" aria-label="Hero">
+  <div class="hero-bg"><div class="sky"></div><div class="rays spin-slow"></div><div class="sun"></div></div>
+  <nav class="nav"><a class="logo" href="#hero">RussRuss</a><ul><li>Menu</li><li>Cleanses</li><li>Find the stand</li></ul><span class="pill">Bag · 0</span></nav>
+
+  <div class="g g-back" data-depth=".3" style="top:30%; left:14%; width:clamp(70px, 10vw, 160px)"><img src="assets/melon.webp" alt="" style="transform:rotate(-18deg)"></div>
+  <div class="g g-back" data-depth=".25" style="top:30%; right:15%; width:clamp(46px, 5.5vw, 92px)"><img src="assets/pineapple.webp" alt="" style="transform:rotate(14deg)"></div>
+
+  <div class="splash-pos"><img id="splash" src="assets/splash.webp" alt=""></div>
+  <div class="cup-pos"><div id="cup"><div id="cupIn"><img src="assets/cup-orange.webp" alt="Cup of fresh orange juice with a striped straw"></div></div></div>
+
+  <h1 class="hl-wrap"><span class="hl hl-1 retro" data-split>Squeezed</span><span class="hl hl-2 retro" data-split>sunshine.</span></h1>
+
+  <div class="g g-front" data-depth="1.2" style="top:13%; right:6%; width:clamp(90px, 12vw, 200px)"><img src="assets/orange-half.webp" alt="" style="transform:rotate(16deg)"></div>
+  <div class="g g-front" data-depth="1.5" style="top:52%; left:8%; width:clamp(50px, 6vw, 96px)"><img src="assets/strawberry.webp" alt="" style="transform:rotate(-20deg)"></div>
+  <div class="g g-front" data-depth="1.7" style="top:58%; right:30%; width:clamp(30px, 4vw, 64px)"><svg viewBox="-30 -50 60 100" style="transform:rotate(40deg)"><use href="#leaf" /></svg></div>
+  <div class="g g-front" data-depth="2.1" style="top:28%; left:58%; width:clamp(14px, 1.8vw, 28px)"><svg viewBox="-8 -11 16 19"><use href="#drop" /></svg></div>
+  <div class="g g-front" data-depth="2.3" style="top:44%; left:36%; width:clamp(10px, 1.3vw, 22px)"><svg viewBox="-8 -11 16 19"><use href="#drop" /></svg></div>
+
+  <svg class="waves" viewBox="0 0 2000 220" preserveAspectRatio="none" aria-hidden="true">
+    <g data-loop-x><path data-wave="2600,220,50,14,250" fill="#FF2E7E" /></g>
+    <g data-loop-x><path data-wave="2600,220,110,14,250" fill="#FF6A13" /></g>
+    <g data-loop-x><path data-wave="2600,220,170,14,250" fill="#FFC300" /></g>
+  </svg>
+
+  <div class="hero-ui">
+    <div class="meta"><span class="pill">Cold-pressed at sunrise</span><span class="pill">350 ml</span><span class="pill hot">No heat · no HPP</span></div>
+    <span class="cue hide-sm">Scroll for the squeeze ↓</span>
+    <span class="magnet" data-magnet><a class="btn" href="#reel" data-cursor="Order">Order for pickup →</a></span>
+  </div>
+
+  <div id="wipe" class="iris" aria-hidden="true"><div class="rays" id="wipeSpin"></div><p class="retro">Pick your<br>sunshine</p></div>
+</section>
+
+<section class="reel" id="reel" aria-label="Juices">
+  <div class="reel-word" aria-hidden="true"><span id="reelWord">Sunny</span></div>
+  <div class="reel-head"><h2>The squeeze list</h2><span class="pill">4 juices · scroll or drag</span></div>
+  <span class="pill reel-count" id="reelCount">01 / 04</span>
+  <div id="track" data-cursor="Drag">
+    <div class="slot"><article class="card" style="--fc:#FFC300; --juice:#FF6A13; --foam:#FFC300">
+      <div class="stage"><div class="rays spin-slow"></div><div class="disc"></div><div class="prod-pos"><img class="prod" src="assets/cup-orange.webp" alt=""></div><img class="garn" src="assets/orange-half.webp" alt="" style="top:14px; right:16px; width:64px"></div>
+      <div class="card-body"><h3>Sun Up</h3><p>Orange, yuzu, carrot and a little ginger. Breakfast in a cup.</p><div class="stats"><span>140 kcal</span><span>18 g sugar</span><span>3.2 lb fruit</span></div></div>
+      <div class="card-foot"><span class="price">$9.50</span><button class="btn sm" type="button" data-add="0" data-cursor="Add">Add +</button></div>
+    </article></div>
+    <div class="slot"><article class="card" style="--fc:#7ED321; --juice:#7ED321; --foam:#E6F9C8">
+      <div class="stage"><div class="rays spin-slow"></div><div class="disc"></div><div class="prod-pos"><img class="prod" src="assets/cup-green.webp" alt=""></div><svg class="garn" style="top:14px; left:18px; width:40px" viewBox="-30 -50 60 100" aria-hidden="true"><use href="#leaf" /></svg></div>
+      <div class="card-body"><h3>Garden Party</h3><p>Green apple, celery, cucumber and mint. Crisp and cold.</p><div class="stats"><span>90 kcal</span><span>11 g sugar</span><span>3.5 lb produce</span></div></div>
+      <div class="card-foot"><span class="price">$10.00</span><button class="btn sm" type="button" data-add="1" data-cursor="Add">Add +</button></div>
+    </article></div>
+    <div class="slot"><article class="card" style="--fc:#FF2E7E; --juice:#FF2E7E; --foam:#FFB3CF">
+      <div class="stage"><div class="rays spin-slow"></div><div class="disc"></div><div class="prod-pos"><img class="prod" src="assets/cup-pink.webp" alt=""></div><img class="garn" src="assets/strawberry.webp" alt="" style="top:14px; right:16px; width:52px"></div>
+      <div class="card-body"><h3>Berry Beet</h3><p>Watermelon, strawberry and beet. Sweet, then earthy.</p><div class="stats"><span>150 kcal</span><span>24 g sugar</span><span>3.1 lb produce</span></div></div>
+      <div class="card-foot"><span class="price">$9.50</span><button class="btn sm" type="button" data-add="2" data-cursor="Add">Add +</button></div>
+    </article></div>
+    <div class="slot"><article class="card" style="--fc:#FF6A13; --juice:#FFC300; --foam:#FFF4D6">
+      <div class="stage"><div class="rays spin-slow"></div><div class="disc"></div><div class="prod-pos"><img class="prod" src="assets/cup-mango.webp" alt=""></div><img class="garn" src="assets/pineapple.webp" alt="" style="top:16px; left:14px; width:60px"></div>
+      <div class="card-body"><h3>Gold Rush</h3><p>Pineapple, mango and a ginger kick. Tastes like July.</p><div class="stats"><span>130 kcal</span><span>22 g sugar</span><span>2.8 lb fruit</span></div></div>
+      <div class="card-foot"><span class="price">$9.00</span><button class="btn sm" type="button" data-add="3" data-cursor="Add">Add +</button></div>
+    </article></div>
+  </div>
+  <div class="progress" aria-hidden="true"><span id="reelBar"></span></div>
+</section>
+
+<section class="mani-wrap" aria-label="How we press">
+  <div class="mani">
+    <div class="mani-left">
+      <div class="rays spin-slow" aria-hidden="true"></div>
+      <div class="figs">
+        <div class="fig fig-0" data-cap="Fig. 1 · Valencia orange, halved at sunrise"><img class="spin" src="assets/orange-half.webp" alt=""></div>
+        <div class="fig fig-1" data-cap="Fig. 2 · The press, four tons of it"><img src="assets/press.webp" alt=""></div>
+        <div class="fig fig-2" data-cap="Fig. 3 · One cup's worth of fruit"><div class="trio"><img src="assets/melon.webp" alt="" style="left:2%; top:4%; width:46%; transform:rotate(-14deg)"><img src="assets/pineapple.webp" alt="" style="right:6%; top:2%; width:30%; transform:rotate(18deg)"><img src="assets/orange-half.webp" alt="" style="left:24%; top:34%; width:44%"><img src="assets/strawberry.webp" alt="" style="right:4%; bottom:4%; width:34%; transform:rotate(-12deg)"></div></div>
+        <div class="fig fig-3" data-cap="Fig. 4 · Sun Up, 350 ml"><img src="assets/cup-orange.webp" alt=""></div>
+      </div>
+      <p id="figCap">Fig. 1 · Valencia orange, halved at sunrise</p>
+    </div>
+    <div class="mani-right">
+      <ol class="steps" aria-hidden="true"><li class="on">1</li><li>2</li><li>3</li><li>4</li></ol>
+      <div class="mc-stack">
+        <div class="mc"><div class="mc-num"><span class="n" data-to="100" data-dec="0">100</span><span>% raw. Nothing heated.</span></div><p class="mc-text">Pressed, never cooked.</p><div class="row"><span class="pill">No HPP</span><span class="pill">No pasteurizing</span></div></div>
+        <div class="mc"><div class="mc-num"><span class="n" data-to="4" data-dec="0">4</span><span>tons of gentle pressure</span></div><p class="mc-text">Squeezed slow, never spun.</p><div class="row"><span class="pill">Hydraulic press</span></div></div>
+        <div class="mc"><div class="mc-num"><span class="n" data-to="3.2" data-dec="1">3.2</span><span>lbs of fruit in every cup</span></div><p class="mc-text">A whole fruit bowl, drinkable.</p><div class="row"><span class="pill">No concentrate</span></div></div>
+        <div class="mc"><div class="mc-num"><span class="n" data-to="72" data-dec="0">72</span><span>hours, then it's gone</span></div><p class="mc-text">Made today, gone by Thursday.</p><div class="row"><span class="pill">Pressed 6 am</span><span class="pill hot">Best in 3 days</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="outro" aria-label="Order">
+  <img class="float" data-float src="assets/orange-half.webp" alt="" style="left:6%; top:12%; width:clamp(70px, 9vw, 130px)">
+  <img class="float" data-float src="assets/strawberry.webp" alt="" style="right:8%; top:8%; width:clamp(50px, 6vw, 90px)">
+  <img class="float" data-float src="assets/pineapple.webp" alt="" style="right:30%; bottom:14%; width:clamp(60px, 8vw, 120px)">
+  <svg class="outro-wm" viewBox="0 0 1000 240" role="img" aria-label="RussRuss">
+    <defs><clipPath id="oclip"><text x="500" y="180" text-anchor="middle" class="wm-text">RussRuss</text></clipPath></defs>
+    <text x="500" y="180" text-anchor="middle" class="wm-text" fill="#FFE6BF">RussRuss</text>
+    <g clip-path="url(#oclip)"><g id="outroFill" transform="translate(0 -40)"><g data-loop-x><path data-wave="2600,560,14,14,250" fill="#FF2E7E" /></g></g></g>
+  </svg>
+  <div class="outro-row">
+    <p data-split>Sunshine, by the cup.</p>
+    <div style="display:grid; gap:10px; justify-items:end"><span class="magnet" data-magnet><a class="btn" href="#hero" data-cursor="Order">Order for pickup →</a></span><span class="note">Sample hours · open 7 am to 7 pm</span></div>
+  </div>
+  <figure class="postcard" data-reveal><img src="assets/stand.webp" alt="The RussRuss juice stand: striped awning, crates of oranges and watermelons"><figcaption class="pill">Find the stand · sample location</figcaption></figure>
+</section>
+
+<script>
+window.RR = {
+  juice: ['#FF6A13', '#FFC300', '#FF2E7E', '#FFF4D6'],
+  wipe: 'iris', irisAt: '28% 50%', wMin: 300, wMax: 900, bounce: 'elastic.out(1, .3)',
+  flavors: [
+    { bg: '#FFFFFF', tint: '#FFC300', word: 'Sunny', juice: ['#FF6A13', '#FFC300', '#FFF4D6'] },
+    { bg: '#FFFFFF', tint: '#7ED321', word: 'Garden', juice: ['#7ED321', '#E6F9C8', '#FFF4D6'] },
+    { bg: '#FFFFFF', tint: '#FF2E7E', word: 'Berry', juice: ['#FF2E7E', '#FFB3CF', '#FFF4D6'] },
+    { bg: '#FFFFFF', tint: '#FF6A13', word: 'Golden', juice: ['#FFC300', '#FF6A13', '#FFF4D6'] }
+  ]
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="engine.js"></script>
+</body>
+</html>

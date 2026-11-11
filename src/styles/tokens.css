@@ -1,0 +1,24 @@
+/* Sunburst Stand palette and type. White page; colour comes from the sun, the waves, the fruit and the type. */
+@property --ph { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+
+:root {
+  --sun: #FFC300;
+  --tang: #FF6A13;
+  --pink: #FF2E7E;
+  --lime: #7ED321;
+  --cream: #FFF6E2;
+  --cocoa: #3B1E08;
+  --tint-soft: #FFF1DC;
+  --page: #FFFFFF;
+  --muted: #6B4A2F;
+
+  --display: "Shrikhand", "Cooper Black", Georgia, serif;
+  --mono: "Monoton", "Shrikhand", serif;
+  --kick: "Righteous", "Rubik", sans-serif;
+  --body: "Rubik", system-ui, sans-serif;
+
+  /* one stripe step of the extruded headline; scales with the viewport */
+  --x: clamp(.55px, .085vw, 1.35px);
+  --gut: clamp(16px, 4vw, 56px);
+  color-scheme: light;
+}

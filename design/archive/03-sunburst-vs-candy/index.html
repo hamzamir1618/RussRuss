@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RUSSRUSS Design Doc</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2730%27 fill=%27%23FF6A13%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2722%27 fill=%27%23FFC300%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Shrikhand&family=Rubik:wght@300..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Manrope:wght@400..800&display=swap">
+<link rel="stylesheet" href="doc.css">
+</head>
+<body>
+<style>
+/* components shown in each chapter */
+.pill { display: inline-flex; align-items: center; padding: 9px 14px; border-radius: 999px; background: var(--soft); color: var(--ink); font: 700 .8rem/1 var(--body); white-space: nowrap; }
+.pill.hot { background: var(--acc); color: #FFFFFF; }
+.ch-a .b-main { display: inline-flex; align-items: center; gap: 10px; padding: 17px 26px; border-radius: 999px; border: 0; background: #FF2E7E; color: #FFFFFF; font: 800 1rem/1 var(--body); cursor: pointer; box-shadow: 0 10px 0 -2px #3B1E08; transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s; }
+.ch-a .b-main:hover { transform: translateY(-3px) rotate(-1.5deg); box-shadow: 0 13px 0 -2px #3B1E08; }
+.ch-a .b-main:active { transform: translateY(6px); box-shadow: 0 2px 0 -2px #3B1E08; }
+.ch-c .b-main { position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 18px 30px; border-radius: 999px; border: 0; background: linear-gradient(180deg, #FF6A92, #FF3D6E); color: #FFFFFF; font: 800 1rem/1 var(--body); cursor: pointer; box-shadow: inset 0 2px 0 rgba(255,255,255,.5), inset 0 -4px 0 rgba(120,0,40,.25), 0 14px 30px -10px rgba(190,0,60,.6); }
+.ch-c .b-main::after { content: ""; position: absolute; left: 18%; right: 18%; top: 4px; height: 36%; border-radius: 999px; background: linear-gradient(rgba(255,255,255,.65), rgba(255,255,255,0)); pointer-events: none; }
+.pcard { width: min(100%, 320px); border-radius: 32px; overflow: hidden; background: #FFF8EC; box-shadow: 0 30px 40px -22px rgba(59,30,8,.35); transform-style: preserve-3d; }
+.ch-c .pcard { background: #FFFFFF; box-shadow: 0 40px 60px -30px rgba(42,10,28,.35), 0 0 0 1px #FBE3EC; position: relative; }
+.pcard .st { position: relative; height: 230px; margin: 12px 12px 0; border-radius: 22px; overflow: hidden; background: var(--fc, #FFC300); }
+.pcard .st img.cupi { position: absolute; left: 50%; bottom: 6px; height: 92%; transform: translateX(-50%); filter: drop-shadow(0 14px 14px rgba(0,0,0,.2)); }
+.pcard .st img.bl { position: absolute; left: 12%; top: 16%; width: 76%; opacity: .95; }
+.pcard .st .rays { position: absolute; width: 480px; height: 480px; left: 50%; top: 100%; margin: -240px 0 0 -240px; background: repeating-conic-gradient(from 0deg, rgba(255,244,214,.4) 0deg 9deg, transparent 9deg 18deg); animation: rot 40s linear infinite; }
+@keyframes rot { to { transform: rotate(360deg); } }
+.pcard .bd { padding: 16px 20px 0; display: grid; gap: 6px; }
+.pcard h5 { margin: 0; font: 400 1.8rem/1 var(--display); color: var(--ink); }
+.ch-c .pcard h5 { font-weight: 800; letter-spacing: -.04em; font-variation-settings: 'wdth' 80; }
+.pcard p { font: 500 .9rem/1.45 var(--body); color: var(--muted); }
+.pcard .ft { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px 20px; }
+.pcard .pr { font: 800 1.25rem/1 var(--body); color: var(--ink); }
+.pcard .glare { position: absolute; inset: 0; pointer-events: none; border-radius: inherit; background: radial-gradient(circle at var(--gx, 30%) var(--gy, 20%), rgba(255,255,255,.55), rgba(255,255,255,0) 40%); mix-blend-mode: soft-light; }
+</style>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#overview">RUSSRUSS · Design doc</a>
+    <nav class="tabs" aria-label="Sections"><a href="#overview">Overview</a><a href="#sunburst">Sunburst Stand</a><a href="#candy">Candy Gloss</a><a href="#build">Build notes</a></nav>
+  </div>
+</header>
+
+<main>
+<!-- ================= OVERVIEW ================= -->
+<section class="wrap cover" id="overview">
+  <span class="label">Landing page · two directions · v0.3 · 12 Oct 2026</span>
+  <h1>Two ways to pour <span class="a">Russ</span><span class="c">Russ</span></h1>
+  <p class="lede">You picked Sunburst Stand and Candy Gloss. Both run on a white canvas with your photos and share one scroll choreography. This doc covers each direction's look, assets, motion and transitions. Every demo runs live, and every transition can be scrubbed frame by frame.</p>
+  <div class="pair">
+    <a class="pick ch-a" href="#sunburst"><div><span class="label">Direction A</span><h2>Sunburst Stand</h2><p>A 1970s juice stand in the sun: a sunset-filled sun disc, slow-turning rays, wave bands and retro type with stacked shadows. Warm, bouncy and nostalgic.</p></div><img src="assets/cup-orange.webp" alt="Orange juice cup"></a>
+    <a class="pick ch-c" href="#candy"><div><span class="label">Direction C</span><h2>Candy Gloss</h2><p>A glossy pop studio: wobbling juice blobs, lacquered fruit, bubbles that pop and drips that stretch. Squishy, juicy and loud.</p></div><img src="assets/blob-orange.webp" alt="Glossy orange juice blob"></a>
+  </div>
+</section>
+
+<section class="wrap" aria-label="Shared choreography">
+  <div class="sec-h"><h3 style="font-family:var(--ui); font-weight:800; letter-spacing:-.03em">One scroll, eight scenes</h3><p>Both directions follow the same order, so the build is shared. Only the look and the transitions between scenes change.</p></div>
+  <div class="scenes-strip">
+    <div><b>00</b>Loader: the wordmark fills with juice</div>
+    <div><b>01</b>Drop: the cup falls, squashes and splashes</div>
+    <div><b>02</b>Press: the hero pulls apart on scroll</div>
+    <div><b>03</b>Transition into the products</div>
+    <div><b>04</b>Product row: pinned, scrolls sideways</div>
+    <div><b>05</b>Reveal into the manifesto</div>
+    <div><b>06</b>Manifesto: counters fill, figures swap</div>
+    <div><b>07</b>Outro: the wordmark fills, then the CTA</div>
+  </div>
+  <div class="how" style="margin-top:16px">
+    <div><b>Live prototypes</b>Each chapter starts with the full page embedded. Click the frame to play it, or open it full screen.</div>
+    <div><b>Motion library</b>Each tile isolates one animation. It plays when it scrolls into view, and Replay runs it again.</div>
+    <div><b>Transition lab</b>Drag the slider to scrub a transition frame by frame, or press play. Tiles marked <span class="tag live">In prototype</span> already run in the page; the rest are options.</div>
+  </div>
+</section>
+
+<!-- ================= SUNBURST ================= -->
+<section class="chapter ch-a" id="sunburst">
+  <div class="wrap">
+    <div class="ch-head">
+      <div>
+        <span class="label">Direction A</span>
+        <h2 class="ch-title">Sunburst Stand</h2>
+        <div class="ch-meta">
+          <p class="lede">A roadside juice stand at golden hour. The cup lands in front of a sunset-filled sun, rays turn slowly behind it, and wave bands roll along the bottom. Everything bounces a little.</p>
+          <div class="dots" aria-label="Palette"><i style="background:#FF2E7E"></i><i style="background:#FF6A13"></i><i style="background:#FFC300"></i><i style="background:#7ED321"></i><i style="background:#3B1E08"></i><i style="background:#FFFFFF"></i></div>
+          <a class="btn" href="a-sunburst.html" target="_blank" rel="noopener">Open full prototype ↗</a>
+        </div>
+      </div>
+      <div>
+        <div class="frame" data-frame><iframe src="a-sunburst.html" title="Sunburst Stand prototype" loading="lazy"></iframe><button class="veil" type="button"><span>Click to play here</span></button><button class="btn sm ghost release" type="button">Release scroll</button></div>
+        <p class="frame-note">Scroll inside the frame once it's active. Full screen shows it at true size.</p>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Look &amp; type</h3><p>A white canvas carries the layout. Color comes from the sun, the waves, the fruit and the type.</p></div>
+      <div class="ident">
+        <div class="swatches">
+          <div class="sw"><div style="background:#FF2E7E"></div><p><b>Hot pink</b>Headlines, CTA, accents <code>#FF2E7E</code></p></div>
+          <div class="sw"><div style="background:#FF6A13"></div><p><b>Tangerine</b>Shadow layer, juice <code>#FF6A13</code></p></div>
+          <div class="sw"><div style="background:#FFC300"></div><p><b>Sunflower</b>The sun, shadow layer <code>#FFC300</code></p></div>
+          <div class="sw"><div style="background:#7ED321"></div><p><b>Lime</b>Greens flavor, leaves <code>#7ED321</code></p></div>
+          <div class="sw"><div style="background:#3B1E08"></div><p><b>Cocoa</b>Body text, button base <code>#3B1E08</code></p></div>
+          <div class="sw"><div style="background:#FFF1DC"></div><p><b>Cream</b>Pills, cards, tints <code>#FFF1DC</code></p></div>
+        </div>
+        <div class="typeset">
+          <div><span class="label">Display · Shrikhand</span><p class="spec-big">Squeezed sunshine.</p></div>
+          <div><span class="label">Callouts · Rubik variable, 300–900</span><p class="spec-var" id="aWeight">Pressed, never cooked.</p>
+            <div class="ctl"><label for="aW">Weight</label><input type="range" id="aW" min="300" max="900" value="900"><output id="aWo">900</output></div></div>
+          <p class="spec-body">Body copy in Rubik 500. It's round and friendly, and its weight axis drives the manifesto's swell from 300 to 900.</p>
+          <div class="tokens"><span>Headline shadow 3/3 tangerine + 6/6 sunflower</span><span>Radius 34px cards</span><span>Button base shadow 0 10 0 cocoa</span><span>Spring ease (.34, 1.56, .64, 1)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Asset kit</h3><p>Your photos, cut out to transparent WebP. Hover a tile to see how it behaves on the page.</p></div>
+      <div class="kit" id="kitA"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Motion library</h3><p>The building blocks, one per tile. They play when they scroll into view.</p></div>
+      <div class="tiles">
+        <article class="mo"><div class="mo-head"><h4>Juice-fill wordmark</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-loader"></div><div class="mo-note"><dl><dt>Scene</dt><dd>00 loader, 07 outro</dd><dt>Timing</dt><dd>1.5s, power2.inOut, wave loops</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Drop, squash, splash</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-drop"></div><div class="mo-note"><dl><dt>Scene</dt><dd>01 drop</dd><dt>Timing</dt><dd>Fall .62s power3.in, squash .1s, elastic settle .9s, splash 1s expo.out</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Retro letters</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-retro"></div><div class="mo-note"><dl><dt>Scene</dt><dd>01 headline, section titles</dd><dt>Timing</dt><dd>Letters rise 1s expo.out, 35ms stagger, then the shadow layers peel out</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Sunset sun &amp; rays</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-sun"></div><div class="mo-note"><dl><dt>Scene</dt><dd>01–02 hero backdrop</dd><dt>Timing</dt><dd>Disc pops with elastic, rays turn 60s per lap. Hover speeds them up.</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Wave bands</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-waves"></div><div class="mo-note"><dl><dt>Scene</dt><dd>01 hero base</dd><dt>Timing</dt><dd>Bands rise in stagger, then loop at 1.2s per wavelength</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Pointer depth</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-depth"></div><div class="mo-note"><dl><dt>Scene</dt><dd>01 hero</dd><dt>Behavior</dt><dd>Each fruit shifts against the pointer by its depth (0.3× to 2×), and floats when idle</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Card tilt &amp; turning cup</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-card"></div><div class="mo-note"><dl><dt>Scene</dt><dd>04 product row</dd><dt>Behavior</dt><dd>The slider stands in for scroll: the cup turns from −24° to +12° as the card crosses the screen. Hover tilts the card.</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Counter fill</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-counter"></div><div class="mo-note"><dl><dt>Scene</dt><dd>06 manifesto</dd><dt>Timing</dt><dd>Count .8s power2.out, fill rises in step, callout weight 300→900</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Press &amp; pour</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-press"></div><div class="mo-note"><dl><dt>Scene</dt><dd>06 manifesto, figure 2</dd><dt>Timing</dt><dd>Lever push .4s, squash, juice burst from the spout</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Postcard reveal</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="a-postcard"></div><div class="mo-note"><dl><dt>Scene</dt><dd>07 outro, "find the stand"</dd><dt>Timing</dt><dd>Rounded clip opens from the middle while the photo settles from 1.2× scale</dd></dl></div></article>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Transition lab</h3><p>Six ways to move between scenes, all built from your assets. Drag to scrub, or press play.</p></div>
+      <div class="labs">
+        <article class="lab"><div class="lab-stage" data-lab="a-iris"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Sun iris <span class="tag live">In prototype</span></h4><p>The rays speed up and a white circle opens out of the sun, carrying "Pick your sunshine" into the product row. Scrubbed over the last 50% of the hero pin.</p></div></article>
+        <article class="lab"><div class="lab-stage" data-lab="a-dive"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Sunset dive <span class="tag">Option</span></h4><p>The camera dives into the sun disc. The sunset photo fills the screen and burns out to white, and the next scene fades up. Good for hero → products.</p></div></article>
+        <article class="lab"><div class="lab-stage" data-lab="a-awning"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Awning drop <span class="tag">Option</span></h4><p>A scalloped striped awning rolls down like a shop shutter, then rolls up on the juice stand. Good for manifesto → outro.</p></div></article>
+        <article class="lab"><div class="lab-stage" data-lab="a-orange"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Orange spin-through <span class="tag">Option</span></h4><p>The orange half spins in from the corner and fills the screen, then you pass through its white center into the next scene. Good for products → manifesto.</p></div></article>
+        <article class="lab"><div class="lab-stage" data-lab="a-waverise"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Wave rise <span class="tag">Option</span></h4><p>The hero's three wave bands rise up and over the screen in stagger, and a final white wave lifts the next scene in. The most on-brand option.</p></div></article>
+        <article class="lab"><div class="lab-stage" data-lab="a-splash"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Splash burst <span class="tag">Option</span></h4><p>The sunburst splash explodes out of the cup toward the camera, and the next scene shows through as it passes. Quick and punchy, so best as a cut between small sections.</p></div></article>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Scene map</h3><p>What runs where, with the strongest alternates from the lab.</p></div>
+      <div class="tbl"><table>
+        <thead><tr><th>Moment</th><th>In the prototype</th><th>Alternates</th><th>Scroll / time</th></tr></thead>
+        <tbody>
+          <tr><td><b>Load</b></td><td>Wordmark fills pink, curtain lifts</td><td>None</td><td>1.6s, scroll locked</td></tr>
+          <tr><td><b>Hero entry</b></td><td>Cup drop + splash + retro letters + fruit fly-in</td><td>None</td><td>1.3s</td></tr>
+          <tr><td><b>Hero → products</b></td><td>Sun iris</td><td>Sunset dive, wave rise</td><td>Pinned 160vh, last half</td></tr>
+          <tr><td><b>Flavor to flavor</b></td><td>Giant word swap, accent tint, cups turning</td><td>Splash burst on card hover</td><td>~330vh pinned</td></tr>
+          <tr><td><b>Products → manifesto</b></td><td>Circle reveal from the figure panel</td><td>Orange spin-through</td><td>First 25% of 380vh pin</td></tr>
+          <tr><td><b>Manifesto → outro</b></td><td>Free scroll, wordmark fill, postcard reveal</td><td>Awning drop onto the stand photo</td><td>Free</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Components</h3><p>All live. Press the button and add to the bag.</p></div>
+      <div class="comps">
+        <div class="comp-col">
+          <div class="comp-row"><span class="label">Primary button</span><div class="items"><button class="b-main" type="button" data-burst="a">Order for pickup →</button></div></div>
+          <div class="comp-row"><span class="label">Pills</span><div class="items"><span class="pill">Cold-pressed at sunrise</span><span class="pill">350 ml</span><span class="pill hot">No heat · no HPP</span></div></div>
+          <div class="comp-row"><span class="label">Rules</span><p style="font-size:.9rem">Cards sit on cream with a warm shadow. The stage inside each card takes the flavor color and slow rays. Buttons press down onto a cocoa base and spring back.</p></div>
+        </div>
+        <div class="comp-row" style="justify-items:center"><span class="label" style="justify-self:start">Product card (hover to tilt)</span>
+          <article class="pcard" data-tilt style="--fc:#FFC300"><div class="st"><div class="rays"></div><img class="cupi" src="assets/cup-orange.webp" alt="Sun Up cup"></div><div class="bd"><h5>Sun Up</h5><p>Orange, yuzu, carrot and a little ginger.</p></div><div class="ft"><span class="pr">$9.50</span><button class="b-main" type="button" data-burst="a" style="padding:11px 16px; font-size:.82rem; box-shadow:0 6px 0 -2px #3B1E08">Add +</button></div></article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CANDY ================= -->
+<section class="chapter ch-c" id="candy">
+  <div class="wrap">
+    <div class="ch-head">
+      <div>
+        <span class="label">Direction C</span>
+        <h2 class="ch-title">Candy Gloss</h2>
+        <div class="ch-meta">
+          <p class="lede">A pop studio where juice behaves like candy. Glossy blobs wobble behind the cup, lacquered fruit floats, bubbles pop when you touch them and drips stretch down the page.</p>
+          <div class="dots" aria-label="Palette"><i style="background:#FF3D6E"></i><i style="background:#FF7A00"></i><i style="background:#B6F500"></i><i style="background:#FFD60A"></i><i style="background:#2A0A1C"></i><i style="background:#FFFFFF"></i></div>
+          <a class="btn" href="c-candy.html" target="_blank" rel="noopener">Open full prototype ↗</a>
+        </div>
+      </div>
+      <div>
+        <div class="frame" data-frame><iframe src="c-candy.html" title="Candy Gloss prototype" loading="lazy"></iframe><button class="veil" type="button"><span>Click to play here</span></button><button class="btn sm ghost release" type="button">Release scroll</button></div>
+        <p class="frame-note">Scroll inside the frame once it's active. Full screen shows it at true size.</p>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Look &amp; type</h3><p>White studio, saturated candy accents. Every color has a glossy highlight, and nothing is flat for long.</p></div>
+      <div class="ident">
+        <div class="swatches">
+          <div class="sw"><div style="background:#FF3D6E"></div><p><b>Watermelon</b>Headline, CTA <code>#FF3D6E</code></p></div>
+          <div class="sw"><div style="background:#FF7A00"></div><p><b>Orange pop</b>Orange world <code>#FF7A00</code></p></div>
+          <div class="sw"><div style="background:#B6F500"></div><p><b>Lime</b>Lime world <code>#B6F500</code></p></div>
+          <div class="sw"><div style="background:#FFD60A"></div><p><b>Sunshine</b>Mango world <code>#FFD60A</code></p></div>
+          <div class="sw"><div style="background:#2A0A1C"></div><p><b>Licorice</b>Text <code>#2A0A1C</code></p></div>
+          <div class="sw"><div style="background:#FFF0F4"></div><p><b>Bubblegum tint</b>Pills, tracks <code>#FFF0F4</code></p></div>
+        </div>
+        <div class="typeset">
+          <div><span class="label">Display · Bricolage Grotesque, width + weight axes</span><p class="spec-big" id="cSpec">Juicy &amp; glossy.</p>
+            <div class="ctl"><label for="cWd">Width</label><input type="range" id="cWd" min="75" max="100" value="75"><output id="cWdo">75</output><label for="cWg">Weight</label><input type="range" id="cWg" min="200" max="800" value="800"><output id="cWgo">800</output></div></div>
+          <p class="spec-body">Body copy in Manrope. On hover, headings squash and stretch through the width axis, so the type itself feels squishy.</p>
+          <div class="tokens"><span>Radius 36px cards, pill buttons</span><span>Gloss: inset top highlight + soft color shadow</span><span>Bouncy ease elastic.out(1.1, .28)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Asset kit</h3><p>Your Candy Gloss set plus the shared cup photos. Hover a tile to see how it behaves.</p></div>
+      <div class="kit" id="kitC"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Motion library</h3><p>Squash, stretch, wobble and pop. Several tiles respond to your pointer, so try poking them.</p></div>
+      <div class="tiles">
+        <article class="mo"><div class="mo-head"><h4>Jelly blob</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="c-wobble"></div><div class="mo-note"><dl><dt>Scene</dt><dd>01 hero backdrop, cards</dd><dt>Behavior</dt><dd>Idle wobble on a 6s loop. Click to poke: squash, then an elastic settle.</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Jelly cup landing</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="c-jelly"></div><div class="mo-note"><dl><dt>Scene</dt><dd>01 drop</dd><dt>Timing</dt><dd>Fall .55s, then squash and stretch with elastic.out(1.1, .28), and bubbles pop out</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Glossy button</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="c-button"></div><div class="mo-note"><dl><dt>Scene</dt><dd>All CTAs</dd><dt>Behavior</dt><dd>Magnetic pull at 35%, squish on press, bubble burst on click</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Glare card</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="c-glare"></div><div class="mo-note"><dl><dt>Scene</dt><dd>04 product row</dd><dt>Behavior</dt><dd>The card tilts toward the pointer and a specular highlight follows it across the surface</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Pop the bubbles</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="c-bubbles"></div><div class="mo-note"><dl><dt>Scene</dt><dd>Hero front layer, loader</dd><dt>Behavior</dt><dd>Bubbles drift on sine paths. Click one to pop it: it swells 30%, bursts into droplets and respawns.</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Color worlds</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="c-world"></div><div class="mo-note"><dl><dt>Scene</dt><dd>04 flavor to flavor</dd><dt>Behavior</dt><dd>Pick a flavor: the blob squishes into the new color, the cup bounces in and the tint floods</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Drip stretch</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="c-drip"></div><div class="mo-note"><dl><dt>Scene</dt><dd>07 outro top edge</dd><dt>Timing</dt><dd>Scrubbed by scroll: scaleY .15→1 from the top edge, beads wobble at the tips</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Ribbon pour</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="c-ribbon"></div><div class="mo-note"><dl><dt>Scene</dt><dd>04 behind the product title</dd><dt>Timing</dt><dd>Clip draws left to right while the ribbon floats</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Squeeze bloom</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="c-squeeze"></div><div class="mo-note"><dl><dt>Scene</dt><dd>06 manifesto, figure 2</dd><dt>Timing</dt><dd>Scale .3→1 with elastic overshoot, slight spin, glow pulse</dd></dl></div></article>
+        <article class="mo"><div class="mo-head"><h4>Lime counter</h4><button class="replay" type="button">Replay</button></div><div class="mo-stage" data-demo="c-lime"></div><div class="mo-note"><dl><dt>Scene</dt><dd>06 manifesto</dd><dt>Timing</dt><dd>The wheel spins with the count, and the number fills while stretching from wdth 75 to 100</dd></dl></div></article>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Transition lab</h3><p>Six candy transitions from your assets. Drag to scrub, or press play.</p></div>
+      <div class="labs">
+        <article class="lab"><div class="lab-stage" data-lab="c-pass"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Blob pass <span class="tag live">In prototype</span></h4><p>Four juice blobs sweep across the screen in alternating directions while the hero fades behind them, so the next scene arrives on white.</p></div></article>
+        <article class="lab"><div class="lab-stage" data-lab="c-goo"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Goo drip <span class="tag">Option</span></h4><p>Pink juice drips down from the top edge and floods the screen, then drains away downward to reveal the next scene.</p></div></article>
+        <article class="lab"><div class="lab-stage" data-lab="c-pop"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Bubble pop <span class="tag">Option</span></h4><p>Bubbles float in and swell until they cover the screen, then pop one by one, each hole showing more of the next scene.</p></div></article>
+        <article class="lab"><div class="lab-stage" data-lab="c-morph"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Color-world morph <span class="tag live">In prototype</span></h4><p>Flavor to flavor: the blob squishes from orange to lime, the tint floods, and the old cup leaves as the new one bounces in.</p></div></article>
+        <article class="lab"><div class="lab-stage" data-lab="c-zoom"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Squeeze zoom <span class="tag">Option</span></h4><p>The squeezed orange blooms, then the camera dives into its juice sphere until it fills the screen, and the manifesto comes up through it. Good for products → manifesto.</p></div></article>
+        <article class="lab"><div class="lab-stage" data-lab="c-ribbonwipe"></div><div class="lab-ctl"><button class="play" type="button" aria-label="Play">▶</button><input type="range" min="0" max="1000" value="0" aria-label="Scrub transition"><output>0%</output></div><div class="lab-body"><h4>Ribbon wipe <span class="tag">Option</span></h4><p>A giant ribbon of juice swoops diagonally across the screen, and the next scene is revealed in its wake. Good for manifesto → outro.</p></div></article>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Scene map</h3><p>What runs where, with the strongest alternates from the lab.</p></div>
+      <div class="tbl"><table>
+        <thead><tr><th>Moment</th><th>In the prototype</th><th>Alternates</th><th>Scroll / time</th></tr></thead>
+        <tbody>
+          <tr><td><b>Load</b></td><td>Wordmark fills watermelon, a blob spins in</td><td>Bubbles float up and pop the curtain away</td><td>1.6s, scroll locked</td></tr>
+          <tr><td><b>Hero entry</b></td><td>Jelly cup landing + blobs wobble + fruit fly-in</td><td>None</td><td>1.3s</td></tr>
+          <tr><td><b>Hero → products</b></td><td>Blob pass</td><td>Bubble pop, goo drip</td><td>Pinned 160vh, last half</td></tr>
+          <tr><td><b>Flavor to flavor</b></td><td>Color-world morph, ribbon draws in</td><td>None</td><td>~330vh pinned</td></tr>
+          <tr><td><b>Products → manifesto</b></td><td>Circle reveal</td><td>Squeeze zoom</td><td>First 25% of 380vh pin</td></tr>
+          <tr><td><b>Manifesto → outro</b></td><td>Drip stretches down, wordmark fills</td><td>Ribbon wipe</td><td>Free</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><h3>Components</h3><p>All live. Squish the button and tilt the card.</p></div>
+      <div class="comps">
+        <div class="comp-col">
+          <div class="comp-row"><span class="label">Primary button</span><div class="items"><button class="b-main" type="button" data-burst="c" data-squish>Order for pickup →</button></div></div>
+          <div class="comp-row"><span class="label">Pills</span><div class="items"><span class="pill">Cold-pressed today</span><span class="pill">350 ml</span><span class="pill hot">No heat · no HPP</span></div></div>
+          <div class="comp-row"><span class="label">Rules</span><p style="font-size:.9rem">White cards with a hairline blush edge. The stage holds the flavor's juice blob, and the highlight follows the pointer. Buttons are glossy pills that squish on press.</p></div>
+        </div>
+        <div class="comp-row" style="justify-items:center"><span class="label" style="justify-self:start">Product card (hover for glare)</span>
+          <article class="pcard" data-tilt data-glare style="--fc:#FFF0F4"><div class="st"><img class="bl" src="assets/blob-pink.webp" alt=""><img class="cupi" src="assets/cup-pink.webp" alt="Berry Beet cup"></div><div class="bd"><h5>Berry Beet</h5><p>Watermelon, strawberry and beet.</p></div><div class="ft"><span class="pr">$9.50</span><button class="b-main" type="button" data-burst="c" data-squish style="padding:11px 18px; font-size:.84rem">Add +</button></div><div class="glare"></div></article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BUILD ================= -->
+<section class="chapter" id="build">
+  <div class="wrap">
+    <div class="sec-h"><h3 style="font-family:var(--ui); font-weight:800; letter-spacing:-.03em; font-size:clamp(1.9rem,3.6vw,2.8rem)">Build notes</h3><p>What engineering needs, whichever direction wins.</p></div>
+    <div class="notes">
+      <div><b>One engine, two skins</b>Both prototypes run on the same <code>engine.js</code> (GSAP 3.12 + ScrollTrigger + Lenis, about 40 KB gzipped). Each direction only swaps CSS, markup and a small config: flavors, transition type and easing.</div>
+      <div><b>Assets</b>Your 20 photos became 35 transparent WebP cutouts, 2.7 MB in total. Cups are cropped to the same framing, fruit sets are split into single pieces, and bubbles are split into individual spheres for the pop effects.</div>
+      <div><b>Performance</b>Only transform, opacity, clip-path and variable-font axes are animated. Particle canvas capped at 2× DPR, with half the particles on touch. Images over 1000px wide are reserved for the hero cup.</div>
+      <div><b>Reduced motion</b>No loader, no pins, no particles. Every section renders in a static layout with all copy and products visible.</div>
+      <div><b>Mobile</b>Pins stay, since they work with touch scrolling. Pointer depth, cursor and glare are off. The product row shows 1.2 cards so the next one peeks in.</div>
+      <div><b>Sample content</b>Product names, prices, nutrition and hours are placeholders, kept the same in both directions so they compare fairly.</div>
+    </div>
+    <div class="sec" style="margin-top:48px">
+      <div class="sec-h"><h3 style="font-family:var(--ui); font-weight:800; letter-spacing:-.03em; font-size:1.8rem">Open questions</h3></div>
+      <ol class="qs">
+        <li>Which direction goes forward, or should we combine them (for example Sunburst's structure with Candy's blobs and bubbles)?</li>
+        <li>From the labs, which transitions do you want in the final page for hero → products and manifesto → outro?</li>
+        <li>Do we have real product names, prices and nutrition yet? They change card heights and the counters.</li>
+        <li>What framework is the app built in? The engine is plain JS and drops into React or Next with a small wrapper.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="wrap">RUSSRUSS · Design doc v0.3 · Sunburst Stand &amp; Candy Gloss · Photos: your Nano Banana set, cut out for web</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="doc-core.js"></script>
+<script src="labs-a.js"></script>
+<script src="labs-c.js"></script>
+<script src="doc-init.js"></script>
+</body>
+</html>
